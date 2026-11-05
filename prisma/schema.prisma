@@ -1,0 +1,48 @@
+// Skema database bagian Chatrina.
+// Teman satu kelompok menambahkan model miliknya sendiri di bawah (Place, Review, History, Video).
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+// Akun. Admin dipakai untuk login dashboard; USER dipakai Ko Andre untuk login pengunjung.
+model User {
+  id           Int      @id @default(autoincrement())
+  username     String   @unique
+  passwordHash String
+  role         Role     @default(USER)
+  createdAt    DateTime @default(now())
+}
+
+// Slide di bagian hero (tampilan awal)
+model HeroSlide {
+  id        Int    @id @default(autoincrement())
+  title     String
+  subtitle  String
+  imageUrl  String
+  sortOrder Int    @default(0)
+}
+
+// Isi bagian "Pengenalan". Hanya ada SATU baris (id selalu 1).
+model AboutContent {
+  id            Int    @id @default(1)
+  title         String
+  heading       String
+  paragraph     String
+  quote         String
+  image         String
+  feature1Title String
+  feature1Text  String
+  feature2Title String
+  feature2Text  String
+}

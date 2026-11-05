@@ -1,26 +1,236 @@
-@import "tailwindcss";
-
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --kt-cream: #f9f6f0;
+  --kt-sand: #f2e8dc;
+  --kt-terracotta: #8b4513;
+  --kt-darkwood: #5c2c16;
+  --kt-gold: #d4af37;
+
+  --bs-primary: #8b4513;
+  --bs-primary-rgb: 139, 69, 19;
+  --bs-body-font-family: var(--font-body), system-ui, -apple-system, "Segoe UI", sans-serif;
+  --bs-body-color: #5c2c16;
+  --bs-body-color-rgb: 92, 44, 22;
+  --bs-link-color: #8b4513;
+  --bs-link-color-rgb: 139, 69, 19;
+  --bs-link-hover-color: #5c2c16;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: var(--kt-cream);
+  background-image: radial-gradient(var(--kt-gold) 0.75px, transparent 0.75px),
+    radial-gradient(var(--kt-terracotta) 0.75px, var(--kt-cream) 0.75px);
+  background-size: 30px 30px;
+  background-position: 0 0, 15px 15px;
+  background-attachment: fixed;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: var(--font-display), Georgia, serif;
+  color: var(--kt-darkwood);
+}
+
+/* ----- Tombol bertema ----- */
+.btn-primary {
+  --bs-btn-bg: #8b4513;
+  --bs-btn-border-color: #8b4513;
+  --bs-btn-hover-bg: #5c2c16;
+  --bs-btn-hover-border-color: #5c2c16;
+  --bs-btn-active-bg: #5c2c16;
+  --bs-btn-active-border-color: #5c2c16;
+  --bs-btn-disabled-bg: #8b4513;
+  --bs-btn-disabled-border-color: #8b4513;
+}
+
+.btn-outline-primary {
+  --bs-btn-color: #8b4513;
+  --bs-btn-border-color: #8b4513;
+  --bs-btn-hover-bg: #8b4513;
+  --bs-btn-hover-border-color: #8b4513;
+  --bs-btn-active-bg: #8b4513;
+  --bs-btn-active-border-color: #8b4513;
+}
+
+/* ----- Navbar & footer ----- */
+.site-navbar {
+  background-color: rgba(249, 246, 240, 0.97);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.35);
+}
+
+.brand-logo {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--kt-gold);
+}
+
+.brand-title {
+  font-family: var(--font-display), serif;
+  font-weight: 700;
+  font-size: 1.25rem;
+  line-height: 1.1;
+}
+
+.brand-subtitle {
+  display: block;
+  font-size: 0.7rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--kt-terracotta);
+  font-weight: 600;
+}
+
+#footer {
+  background-color: var(--kt-darkwood);
+  color: var(--kt-cream);
+}
+
+#footer h3,
+#footer h4 {
+  color: var(--kt-gold);
+}
+
+#footer a {
+  color: var(--kt-cream);
+  text-decoration: none;
+}
+
+#footer ul li a:hover {
+  color: var(--kt-gold);
+  text-decoration: underline;
+}
+
+/* ----- Hero (carousel) ----- */
+.hero-slide {
+  position: relative;
+  height: 70vh;
+  min-height: 420px;
+}
+
+.hero-slide::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(rgba(40, 18, 8, 0.35), rgba(40, 18, 8, 0.65));
+}
+
+.hero-img {
+  object-fit: cover;
+}
+
+.hero-caption {
+  z-index: 2;
+  bottom: 20%;
+}
+
+.hero-caption h1 {
+  color: var(--kt-cream);
+}
+
+/* ----- Section ----- */
+.section {
+  padding: 4.5rem 0;
+}
+
+.section-alt {
+  background-color: var(--kt-sand);
+}
+
+.section-label {
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--kt-terracotta);
+}
+
+.about-img {
+  width: 100%;
+  height: auto;
+  max-height: 560px;
+  object-fit: cover;
+  border-radius: 1rem;
+  box-shadow: 0 10px 30px rgba(92, 44, 22, 0.2);
+}
+
+.card {
+  --bs-card-border-color: rgba(212, 175, 55, 0.4);
+}
+
+.card-photo {
+  height: 210px;
+  object-fit: cover;
+}
+
+.hover-lift {
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px rgba(92, 44, 22, 0.18);
+}
+
+/* ----- Halaman login / register / admin ----- */
+.auth-body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.auth-logo {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--kt-gold);
+  display: block;
+  margin: 8px auto 12px;
+}
+
+.admin-sidebar {
+  background-color: var(--kt-darkwood);
+  color: #fff;
+}
+
+.admin-sidebar .nav-link {
+  color: #fff;
+  border-left: 4px solid transparent;
+  border-radius: 6px;
+}
+
+.admin-sidebar .nav-link:hover {
+  background-color: var(--kt-terracotta);
+}
+
+.admin-sidebar .nav-link.active {
+  background-color: var(--kt-terracotta);
+  border-left-color: var(--kt-gold);
+}
+
+.cell-wrap {
+  max-width: 320px;
+  white-space: normal;
+  word-break: break-word;
+}
+
+.thumb {
+  width: 60px;
+  height: 45px;
+  object-fit: cover;
+  border-radius: 4px;
 }
