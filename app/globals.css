@@ -234,3 +234,106 @@ h1, h2, h3, h4, h5 {
   object-fit: cover;
   border-radius: 4px;
 }
+
+
+.rekomendasi-section {
+  padding: 72px 0;
+  background-color: #f2e8dc;
+}
+
+.rekomendasi-section .section-heading {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto 48px;
+}
+
+.rekomendasi-section .section-label {
+  display: block;
+  color: #8b4513;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.rekomendasi-section .section-heading h2 {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 30px;
+  color: #5c2c16;
+}
+
+.rekomendasi-section .section-desc {
+  color: #8b4513;
+  margin-top: 12px;
+}
+
+.rekomendasi-section .recommendation-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+.rekomendasi-section .recommendation-card {
+  background-color: rgba(255, 255, 255, 0.82);
+  border-left: 4px solid #8b4513;
+  border-radius: 0 12px 12px 0;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(91, 44, 22, 0.05);
+}
+
+.rekomendasi-section .recommendation-image {
+  display: block;
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+.rekomendasi-section .recommendation-area {
+  display: inline-block;
+  background-color: #8b4513;
+  color: #f4e4a2;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+
+.rekomendasi-section .recommendation-card h3 {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 20px;
+  color: #5c2c16;
+  margin-bottom: 12px;
+}
+
+.rekomendasi-section .recommendation-card p {
+  color: #4a4a4a;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.rekomendasi-section .maps-btn {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 8px 14px;
+  background-color: #8b4513;
+  color: white;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.rekomendasi-section .maps-btn:hover {
+  background-color: #5c2c16;
+  color: white;
+}
+
+@media (min-width: 992px) {
+  .rekomendasi-section .recommendation-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
