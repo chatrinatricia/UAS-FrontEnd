@@ -10,6 +10,7 @@ import Row from "react-bootstrap/Row";
 import Tab from "react-bootstrap/Tab";
 import AboutEditor from "@/components/admin/AboutEditor";
 import HeroEditor from "@/components/admin/HeroEditor";
+import RecommendationEditor from "@/components/admin/RecommendationEditor";
 import { api } from "@/lib/api";
 import type { AboutContent, HeroSlide } from "@/lib/types";
 
@@ -65,7 +66,7 @@ export default function AdminDashboard({ username, initialSlides, initialAbout }
 
             <Tab.Pane eventKey="sejarah"><p>sejarah.</p></Tab.Pane>
             <Tab.Pane eventKey="video"><p>cara pembuatan (video).</p></Tab.Pane>
-            <Tab.Pane eventKey="tempat"><p>rekomendasi tempat.</p></Tab.Pane>
+            <Tab.Pane eventKey="tempat"> <h1 className="fs-3 fw-bold mb-4"> Kelola Rekomendasi Tempat </h1> <RecommendationEditor notify={notify} /> </Tab.Pane>
             <Tab.Pane eventKey="ulasan"><p>Wall of Memories.</p></Tab.Pane>
           </Tab.Content>
         </Col>
