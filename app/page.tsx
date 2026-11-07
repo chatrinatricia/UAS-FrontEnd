@@ -3,6 +3,7 @@ import { prisma } from "@/lib/prisma";
 import HeroSection from "@/components/HeroSection";
 import AboutSection from "@/components/AboutSection";
 import RecommendationSection from "@/components/RecommendationSection";
+import WallOfMemories from "@/components/WallOfMemories";
 import { ABOUT } from "@/prisma/seed-data";
 
 export default async function HomePage() {
@@ -18,6 +19,7 @@ export default async function HomePage() {
       <HeroSection slides={slides} />
       <AboutSection about={about ?? ABOUT} />
       <RecommendationSection />
+      <WallOfMemories />
     </>
   );
 }

@@ -337,3 +337,225 @@ h1, h2, h3, h4, h5 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
+
+#memories {
+  padding: 72px 0;
+  color: #5C2C16;
+}
+
+#memories .container {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+#memories .section-heading {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto 48px;
+}
+
+#memories .section-heading h2 {
+  font-family: "Playfair Display", Georgia, serif;
+  color: #5C2C16;
+  font-size: 30px;
+}
+
+#memories .section-desc {
+  margin-top: 12px;
+  color: #8B4513;
+}
+
+#memories .memory-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 30px;
+  align-items: start;
+}
+
+#memories .memory-form-card {
+  background-color: #F9F6F0;
+  border: 1px solid rgba(212, 175, 55, 0.5);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 8px 20px rgba(91, 44, 22, 0.08);
+}
+
+#memories .memory-form-card h3,
+#memories .memory-list-area h3 {
+  color: #8B4513;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 22px;
+  margin-bottom: 18px;
+}
+
+#memories .rating-area {
+  background-color: #ffffffb5;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: 14px;
+  padding: 18px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+#memories .rating-question {
+  color: #5C2C16;
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+#memories .rating-stars {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+}
+
+#memories .rating-button {
+  appearance: none;
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 38px;
+  line-height: 1.2;
+  color: #baa991;
+  cursor: pointer;
+  transition: color 0.2s, transform 0.2s;
+}
+
+#memories .rating-button:hover {
+  transform: scale(1.1);
+}
+
+#memories .rating-button.selected {
+  color: #D4AF37;
+}
+
+#memories .rating-button:focus-visible {
+  outline: 2px solid #D4AF37;
+  outline-offset: 3px;
+}
+
+#memories #storyForm {
+  margin-top: 20px;
+}
+
+#memories #storyForm label {
+  display: block;
+  color: #5C2C16;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+#memories #storyForm input,
+#memories #storyForm textarea {
+  width: 100%;
+  display: block;
+  margin-top: 6px;
+  padding: 12px 14px;
+  border: 1px solid rgba(139, 69, 19, 0.5);
+  border-radius: 10px;
+  background-color: white;
+  color: #5C2C16;
+  font-family: "Plus Jakarta Sans", Arial, sans-serif;
+  font-size: 14px;
+  outline: none;
+}
+
+#memories #storyForm input:focus,
+#memories #storyForm textarea:focus {
+  border-color: #D4AF37;
+}
+
+#memories #storyForm textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+
+#memories .memory-submit {
+  width: 100%;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 999px;
+  background-color: #8B4513;
+  color: #F9F6F0;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+#memories .memory-submit:hover {
+  background-color: #5C2C16;
+  transform: translateY(-2px);
+}
+
+#memories #memoryStatus {
+  margin-top: 12px;
+  color: #8B4513;
+  font-size: 13px;
+}
+
+#memories .memory-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+#memories .memory-note {
+  background-color: #F9F6F0;
+  border: 1px solid rgba(212, 175, 55, 0.5);
+  border-left: 4px solid #8B4513;
+  border-radius: 0 14px 14px 0;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(91, 44, 22, 0.06);
+}
+
+#memories .memory-note h4 {
+  color: #5C2C16;
+  font-size: 17px;
+  margin-bottom: 6px;
+}
+
+#memories .story-rating {
+  color: #D4AF37;
+  font-size: 22px;
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+}
+
+#memories .story-text {
+  color: #4a4a4a;
+  font-size: 14px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+#memories .empty-memory {
+  color: #8B4513;
+  font-size: 14px;
+  font-style: italic;
+}
+
+@media (min-width: 768px) {
+  #memories .memory-layout {
+    grid-template-columns: 1fr 2fr;
+  }
+
+  #memories .memory-list {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 767px) {
+  #memories .memory-form-card {
+    padding: 20px;
+  }
+
+  #memories .rating-button {
+    font-size: 34px;
+  }
+}
