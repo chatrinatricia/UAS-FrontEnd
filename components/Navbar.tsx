@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import RBNavbar from "react-bootstrap/Navbar";
+import VisitorLogout from "@/components/VisitorLogout";
 
 type Menu = { href: string; label: string };
 
@@ -16,7 +17,7 @@ const menus: Menu[] = [
   { href: "/#memories", label: "Wall of Memories" },
 ];
 
-const HIDDEN_ON = ["/login", "/register", "/admin"];
+const HIDDEN_ON = ["/login", "/loginuser", "/register", "/admin"];
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -40,6 +41,9 @@ export default function Navbar() {
                 {menu.label}
               </Nav.Link>
             ))}
+            <Nav.Item className="ms-lg-3">
+              <VisitorLogout />
+            </Nav.Item>
           </Nav>
         </RBNavbar.Collapse>
       </Container>
