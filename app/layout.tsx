@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { Playfair_Display, Plus_Jakarta_Sans } from "next/font/google";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./globals.css";
+import { getSession } from "@/lib/auth";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
@@ -16,11 +17,12 @@ export const metadata: Metadata = {
   icons: { icon: "/images/logo.jpeg" },
 };
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+export default async function RootLayout({ children }: { children: ReactNode }) {
+  const session = await getSession();
   return (
     <html lang="id" className={`${display.variable} ${body.variable}`}>
       <body>
-        <Navbar />
+        <Navbar role={session?.role} />
         <main>{children}</main>
         <Footer />
       </body>

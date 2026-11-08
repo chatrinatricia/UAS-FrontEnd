@@ -53,7 +53,8 @@ export const AnyNull = runtime.AnyNull
 export const ModelName = {
   User: 'User',
   HeroSlide: 'HeroSlide',
-  AboutContent: 'AboutContent'
+  AboutContent: 'AboutContent',
+  Memory: 'Memory'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -107,10 +108,31 @@ export const AboutContentScalarFieldEnum = {
 export type AboutContentScalarFieldEnum = (typeof AboutContentScalarFieldEnum)[keyof typeof AboutContentScalarFieldEnum]
 
 
+export const MemoryScalarFieldEnum = {
+  userId: 'userId',
+  id: 'id',
+  nama: 'nama',
+  rating: 'rating',
+  cerita: 'cerita',
+  status: 'status',
+  tanggal: 'tanggal'
+} as const
+
+export type MemoryScalarFieldEnum = (typeof MemoryScalarFieldEnum)[keyof typeof MemoryScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const NullsOrder = {
+  first: 'first',
+  last: 'last'
+} as const
+
+export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 

@@ -13,19 +13,22 @@ import HeroEditor from "@/components/admin/HeroEditor";
 import RecommendationEditor from "@/components/admin/RecommendationEditor";
 import MemoriesEditor from "@/components/admin/MemoriesEditor";
 import { api } from "@/lib/api";
+import type { Memory } from "@/lib/memories";
 import type { AboutContent, HeroSlide } from "@/lib/types";
 
 type AdminDashboardProps = {
   username: string;
   initialSlides: HeroSlide[];
+  initialMemories: Memory[];
   initialAbout: AboutContent;
 };
 
 type Toast = { text: string; type: "success" | "danger" };
 
-export default function AdminDashboard({ username, initialSlides, initialAbout }: AdminDashboardProps) {
+export default function AdminDashboard({ username, initialSlides, initialAbout, initialMemories }: AdminDashboardProps) {
   const router = useRouter();
   const [slides, setSlides] = useState(initialSlides);
+  const [memories, setMemories] = useState(initialMemories);
   const [toast, setToast] = useState<Toast | null>(null);
 
   // Pesan sukses/gagal yang hilang sendiri setelah 3 detik
@@ -68,7 +71,7 @@ export default function AdminDashboard({ username, initialSlides, initialAbout }
             <Tab.Pane eventKey="sejarah"><p>sejarah.</p></Tab.Pane>
             <Tab.Pane eventKey="video"><p>cara pembuatan (video).</p></Tab.Pane>
             <Tab.Pane eventKey="tempat"> <h1 className="fs-3 fw-bold mb-4"> Kelola Rekomendasi Tempat </h1> <RecommendationEditor notify={notify} /> </Tab.Pane>
-            <Tab.Pane eventKey="ulasan"> <h1 className="fs-3 fw-bold mb-4">Moderasi Ulasan</h1> <MemoriesEditor notify={notify} /> </Tab.Pane>
+            <Tab.Pane eventKey="ulasan" mountOnEnter unmountOnExit> <h1 className="fs-3 fw-bold mb-4">Moderasi Ulasan</h1> <MemoriesEditor memories={memories} setMemories={setMemories} notify={notify} /> </Tab.Pane>
           </Tab.Content>
         </Col>
       </Row>
