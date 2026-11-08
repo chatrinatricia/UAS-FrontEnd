@@ -18,6 +18,7 @@ enum Role {
 // Akun. Admin dipakai untuk login dashboard; USER dipakai Ko Andre untuk login pengunjung.
 model User {
   id           Int      @id @default(autoincrement())
+  memories     Memory[]
   username     String   @unique
   passwordHash String
   role         Role     @default(USER)
@@ -45,4 +46,15 @@ model AboutContent {
   feature1Text  String
   feature2Title String
   feature2Text  String
+}
+
+model Memory {
+  userId    Int?
+  user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  id        String   @id @default(cuid())
+  nama      String
+  rating    Int
+  cerita    String
+  status    String   @default("pending")
+  tanggal   DateTime @default(now())
 }

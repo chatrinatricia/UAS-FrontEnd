@@ -9,9 +9,14 @@ import { ABOUT } from "@/prisma/seed-data";
 export default async function HomePage() {
   await connection();
 
-  const [slides, about] = await Promise.all([
+  const [slides, about, memories] = await Promise.all([
     prisma.heroSlide.findMany({ orderBy: { sortOrder: "asc" } }),
     prisma.aboutContent.findUnique({ where: { id: 1 } }),
+    prisma.memory.findMany({
+      where: { status: "approved" },
+      select: { id: true, nama: true, cerita: true, rating: true },
+      orderBy: { tanggal: "desc" },
+    }),
   ]);
 
   return (
@@ -19,7 +24,7 @@ export default async function HomePage() {
       <HeroSection slides={slides} />
       <AboutSection about={about ?? ABOUT} />
       <RecommendationSection />
-      <WallOfMemories />
+      <WallOfMemories daftar={memories} />
     </>
   );
 }
