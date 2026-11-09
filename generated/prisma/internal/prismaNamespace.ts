@@ -400,7 +400,8 @@ export const ModelName = {
   User: 'User',
   HeroSlide: 'HeroSlide',
   AboutContent: 'AboutContent',
-  Memory: 'Memory'
+  Memory: 'Memory',
+  Sejarah: 'Sejarah'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -416,7 +417,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "heroSlide" | "aboutContent" | "memory"
+    modelProps: "user" | "heroSlide" | "aboutContent" | "memory" | "sejarah"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -716,6 +717,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Sejarah: {
+      payload: Prisma.$SejarahPayload<ExtArgs>
+      fields: Prisma.SejarahFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SejarahFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SejarahPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SejarahFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SejarahPayload>
+        }
+        findFirst: {
+          args: Prisma.SejarahFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SejarahPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SejarahFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SejarahPayload>
+        }
+        findMany: {
+          args: Prisma.SejarahFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SejarahPayload>[]
+        }
+        create: {
+          args: Prisma.SejarahCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SejarahPayload>
+        }
+        createMany: {
+          args: Prisma.SejarahCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SejarahCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SejarahPayload>[]
+        }
+        delete: {
+          args: Prisma.SejarahDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SejarahPayload>
+        }
+        update: {
+          args: Prisma.SejarahUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SejarahPayload>
+        }
+        deleteMany: {
+          args: Prisma.SejarahDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SejarahUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SejarahUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SejarahPayload>[]
+        }
+        upsert: {
+          args: Prisma.SejarahUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SejarahPayload>
+        }
+        aggregate: {
+          args: Prisma.SejarahAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSejarah>
+        }
+        groupBy: {
+          args: Prisma.SejarahGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SejarahGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SejarahCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SejarahCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -801,6 +876,16 @@ export const MemoryScalarFieldEnum = {
 } as const
 
 export type MemoryScalarFieldEnum = (typeof MemoryScalarFieldEnum)[keyof typeof MemoryScalarFieldEnum]
+
+
+export const SejarahScalarFieldEnum = {
+  id: 'id',
+  judul: 'judul',
+  konten: 'konten',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SejarahScalarFieldEnum = (typeof SejarahScalarFieldEnum)[keyof typeof SejarahScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1014,6 +1099,7 @@ export type GlobalOmitConfig = {
   heroSlide?: Prisma.HeroSlideOmit
   aboutContent?: Prisma.AboutContentOmit
   memory?: Prisma.MemoryOmit
+  sejarah?: Prisma.SejarahOmit
 }
 
 /* Types for Logging */

@@ -58,3 +58,10 @@ model Memory {
   status    String   @default("pending")
   tanggal   DateTime @default(now())
 }
+
+model Sejarah {
+  id        Int      @id @default(autoincrement())
+  judul     String
+  konten    String   // Hapus bagian @db.Text di sini
+  updatedAt DateTime @updatedAt
+}
