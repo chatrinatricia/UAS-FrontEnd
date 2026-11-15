@@ -400,7 +400,8 @@ export const ModelName = {
   User: 'User',
   HeroSlide: 'HeroSlide',
   AboutContent: 'AboutContent',
-  Memory: 'Memory'
+  Memory: 'Memory',
+  Place: 'Place'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -416,7 +417,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "heroSlide" | "aboutContent" | "memory"
+    modelProps: "user" | "heroSlide" | "aboutContent" | "memory" | "place"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -716,6 +717,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Place: {
+      payload: Prisma.$PlacePayload<ExtArgs>
+      fields: Prisma.PlaceFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PlaceFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlacePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PlaceFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlacePayload>
+        }
+        findFirst: {
+          args: Prisma.PlaceFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlacePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PlaceFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlacePayload>
+        }
+        findMany: {
+          args: Prisma.PlaceFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlacePayload>[]
+        }
+        create: {
+          args: Prisma.PlaceCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlacePayload>
+        }
+        createMany: {
+          args: Prisma.PlaceCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.PlaceCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlacePayload>[]
+        }
+        delete: {
+          args: Prisma.PlaceDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlacePayload>
+        }
+        update: {
+          args: Prisma.PlaceUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlacePayload>
+        }
+        deleteMany: {
+          args: Prisma.PlaceDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PlaceUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.PlaceUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlacePayload>[]
+        }
+        upsert: {
+          args: Prisma.PlaceUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlacePayload>
+        }
+        aggregate: {
+          args: Prisma.PlaceAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePlace>
+        }
+        groupBy: {
+          args: Prisma.PlaceGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PlaceGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PlaceCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PlaceCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -801,6 +876,20 @@ export const MemoryScalarFieldEnum = {
 } as const
 
 export type MemoryScalarFieldEnum = (typeof MemoryScalarFieldEnum)[keyof typeof MemoryScalarFieldEnum]
+
+
+export const PlaceScalarFieldEnum = {
+  id: 'id',
+  area: 'area',
+  nama: 'nama',
+  alamat: 'alamat',
+  hargaMin: 'hargaMin',
+  hargaMax: 'hargaMax',
+  maps: 'maps',
+  gambar: 'gambar'
+} as const
+
+export type PlaceScalarFieldEnum = (typeof PlaceScalarFieldEnum)[keyof typeof PlaceScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1014,6 +1103,7 @@ export type GlobalOmitConfig = {
   heroSlide?: Prisma.HeroSlideOmit
   aboutContent?: Prisma.AboutContentOmit
   memory?: Prisma.MemoryOmit
+  place?: Prisma.PlaceOmit
 }
 
 /* Types for Logging */

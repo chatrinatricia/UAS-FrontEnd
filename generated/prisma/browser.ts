@@ -37,3 +37,8 @@ export type AboutContent = Prisma.AboutContentModel
  * 
  */
 export type Memory = Prisma.MemoryModel
+/**
+ * Model Place
+ * 
+ */
+export type Place = Prisma.PlaceModel

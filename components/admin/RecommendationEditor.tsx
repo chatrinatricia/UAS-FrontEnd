@@ -1,14 +1,12 @@
 
 "use client";
 
-import { useEffect, useState } from "react";
-import {
-  bacaTempat,
-  simpanTempat,
-  type Tempat,
-} from "@/lib/recommendations";
+import { useState } from "react";
+import type { Tempat } from "@/lib/recommendations";
+import { savePlace, deletePlace } from "@/lib/place-actions";
 
 type Props = {
+  initialTempat: Tempat[];
   notify: (text: string, type?: "success" | "danger") => void;
 };
 
@@ -24,15 +22,13 @@ const formKosong: FormTempat = {
   gambar: "",
 };
 
-export default function RecommendationEditor({ notify }: Props) {
-  const [daftar, setDaftar] = useState<Tempat[]>([]);
+export default function RecommendationEditor({ notify, initialTempat }: Props) {
+  const [daftar, setDaftar] = useState(initialTempat);
   const [form, setForm] = useState<FormTempat>(formKosong);
   const [editId, setEditId] = useState<number | null>(null);
   const [pencarian, setPencarian] = useState("");
 
-  useEffect(() => {
-    setDaftar(bacaTempat());
-  }, []);
+  const [saving, setSaving] = useState(false);
 
   function updateForm<K extends keyof FormTempat>(
     key: K,
@@ -80,7 +76,7 @@ export default function RecommendationEditor({ notify }: Props) {
     e.target.value = "";
   }
 
-  function simpan(event: React.FormEvent<HTMLFormElement>) {
+  async function simpan(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     if (!form.nama.trim() || !form.alamat.trim()) {
@@ -129,24 +125,11 @@ export default function RecommendationEditor({ notify }: Props) {
       gambar: form.gambar.trim(),
     };
 
-    let hasil: Tempat[];
-
-    if (editId !== null) {
-      hasil = daftar.map((item) =>
-        item.id === editId ? { ...item, ...dataForm } : item
-      );
-    } else {
-      const idBaru =
-        daftar.length > 0
-          ? Math.max(...daftar.map((item) => item.id)) + 1
-          : 1;
-
-      hasil = [...daftar, { id: idBaru, ...dataForm }];
-    }
-
+    if (saving) return;
+    setSaving(true);
     try {
-      simpanTempat(hasil);
-      setDaftar(hasil);
+      const saved = await savePlace(editId, dataForm);
+      setDaftar(items => editId === null ? [...items, saved] : items.map(item => item.id === saved.id ? saved : item));
 
       notify(
         editId !== null
@@ -157,10 +140,11 @@ export default function RecommendationEditor({ notify }: Props) {
       resetForm();
     } catch {
       notify(
-        "Gagal menyimpan. Penyimpanan browser mungkin penuh.",
+        "Gagal menyimpan ke database.",
         "danger"
       );
     }
+    finally { setSaving(false); }
   }
 
   function editTempat(item: Tempat) {
@@ -179,16 +163,14 @@ export default function RecommendationEditor({ notify }: Props) {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
-  function hapusTempat(id: number) {
+  async function hapusTempat(id: number) {
     if (!window.confirm("Yakin ingin menghapus tempat ini?")) {
       return;
     }
 
-    const hasil = daftar.filter((item) => item.id !== id);
-
     try {
-      simpanTempat(hasil);
-      setDaftar(hasil);
+      await deletePlace(id);
+      setDaftar(items => items.filter(item => item.id !== id));
 
       if (editId === id) resetForm();
 
@@ -366,7 +348,7 @@ export default function RecommendationEditor({ notify }: Props) {
           </div>
 
           <button
-            type="submit"
+            type="submit" disabled={saving}
             className="btn btn-primary w-100 mt-4"
           >
             {editId !== null

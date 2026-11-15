@@ -54,7 +54,8 @@ export const ModelName = {
   User: 'User',
   HeroSlide: 'HeroSlide',
   AboutContent: 'AboutContent',
-  Memory: 'Memory'
+  Memory: 'Memory',
+  Place: 'Place'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -119,6 +120,20 @@ export const MemoryScalarFieldEnum = {
 } as const
 
 export type MemoryScalarFieldEnum = (typeof MemoryScalarFieldEnum)[keyof typeof MemoryScalarFieldEnum]
+
+
+export const PlaceScalarFieldEnum = {
+  id: 'id',
+  area: 'area',
+  nama: 'nama',
+  alamat: 'alamat',
+  hargaMin: 'hargaMin',
+  hargaMax: 'hargaMax',
+  maps: 'maps',
+  gambar: 'gambar'
+} as const
+
+export type PlaceScalarFieldEnum = (typeof PlaceScalarFieldEnum)[keyof typeof PlaceScalarFieldEnum]
 
 
 export const SortOrder = {

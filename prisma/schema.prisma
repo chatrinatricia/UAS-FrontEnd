@@ -58,3 +58,14 @@ model Memory {
   status    String   @default("pending")
   tanggal   DateTime @default(now())
 }
+
+model Place {
+  id       Int    @id @default(autoincrement())
+  area     String
+  nama     String
+  alamat   String
+  hargaMin Int
+  hargaMax Int
+  maps     String
+  gambar   String
+}
