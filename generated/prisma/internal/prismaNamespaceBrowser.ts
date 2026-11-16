@@ -53,7 +53,9 @@ export const AnyNull = runtime.AnyNull
 export const ModelName = {
   User: 'User',
   HeroSlide: 'HeroSlide',
-  AboutContent: 'AboutContent'
+  AboutContent: 'AboutContent',
+  Memory: 'Memory',
+  Place: 'Place'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -110,6 +112,33 @@ export const AboutContentScalarFieldEnum = {
 export type AboutContentScalarFieldEnum = (typeof AboutContentScalarFieldEnum)[keyof typeof AboutContentScalarFieldEnum]
 
 
+export const MemoryScalarFieldEnum = {
+  userId: 'userId',
+  id: 'id',
+  nama: 'nama',
+  rating: 'rating',
+  cerita: 'cerita',
+  status: 'status',
+  tanggal: 'tanggal'
+} as const
+
+export type MemoryScalarFieldEnum = (typeof MemoryScalarFieldEnum)[keyof typeof MemoryScalarFieldEnum]
+
+
+export const PlaceScalarFieldEnum = {
+  id: 'id',
+  area: 'area',
+  nama: 'nama',
+  alamat: 'alamat',
+  hargaMin: 'hargaMin',
+  hargaMax: 'hargaMax',
+  maps: 'maps',
+  gambar: 'gambar'
+} as const
+
+export type PlaceScalarFieldEnum = (typeof PlaceScalarFieldEnum)[keyof typeof PlaceScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -118,10 +147,10 @@ export const SortOrder = {
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
-export const QueryMode = {
-  default: 'default',
-  insensitive: 'insensitive'
+export const NullsOrder = {
+  first: 'first',
+  last: 'last'
 } as const
 
-export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 

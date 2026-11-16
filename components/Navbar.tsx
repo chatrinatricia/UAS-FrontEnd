@@ -21,7 +21,7 @@ const menus: Menu[] = [
 
 const HIDDEN_ON = ["/login", "/loginuser", "/register", "/admin"];
 
-export default function Navbar() {
+export default function Navbar({ role }: { role?: "ADMIN" | "USER" }) {
   const pathname = usePathname();
   const [active, setActive] = useState("");
 
@@ -73,12 +73,17 @@ export default function Navbar() {
                 {menu.label}
               </Nav.Link>
             ))}
-            <Nav.Item className="nav-logout">
-              <VisitorLogout />
+            <Nav.Item className="nav-logout ms-lg-3">
+              {role === "USER" ? (
+                <VisitorLogout />
+              ) : role === "ADMIN" ? (
+                <Nav.Link as={Link} href="/admin" className="fw-semibold">
+                  Dashboard admin
+                </Nav.Link>
+              ) : (
+                <Nav.Link as={Link} href="/loginuser" className="fw-semibold">
+                  Masuk
+                </Nav.Link>
+              )}
             </Nav.Item>
           </Nav>
-        </RBNavbar.Collapse>
-      </Container>
-    </RBNavbar>
-  );
-}

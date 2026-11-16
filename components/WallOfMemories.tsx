@@ -1,29 +1,29 @@
 "use client";
 
 import { useEffect, useState, type FormEvent } from "react";
-import {
-  bacaMemories,
-  simpanMemories,
-  dengarkanMemories,
-  buatMemory,
-  type Memory,
-} from "@/lib/memories";
+import { useRouter } from "next/navigation";
+import type { Memory } from "@/lib/memories";
+import { api, errorMessage } from "@/lib/api";
 
-export default function WallOfMemories() {
+type Props = { daftar: Pick<Memory, "id" | "nama" | "cerita" | "rating">[] };
+
+export default function WallOfMemories({ daftar }: Props) {
+  const router = useRouter();
   const [nama, setNama] = useState("");
   const [rating, setRating] = useState(0);
   const [cerita, setCerita] = useState("");
   const [pesan, setPesan] = useState("");
-  const [daftar, setDaftar] = useState<Memory[]>([]);
+  const [busy, setBusy] = useState(false);
 
   useEffect(() => {
-    const perbarui = () => setDaftar(bacaMemories());
-    perbarui();
-    return dengarkanMemories(perbarui);
-  }, []);
+    const perbarui = () => router.refresh();
+    window.addEventListener("focus", perbarui);
+    return () => window.removeEventListener("focus", perbarui);
+  }, [router]);
 
-  function kirimUlasan(e: FormEvent<HTMLFormElement>) {
+  async function kirimUlasan(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    if (busy) return;
 
     if (rating === 0) {
       setPesan("Silakan pilih rating terlebih dahulu.");
@@ -35,22 +35,20 @@ export default function WallOfMemories() {
       return;
     }
 
+    setBusy(true);
+    setPesan("");
     try {
-      const ulasan = buatMemory(nama, rating, cerita);
-      simpanMemories([ulasan, ...bacaMemories()]);
-
+      await api("/api/memories", "POST", { nama, rating, cerita });
       setNama("");
       setRating(0);
       setCerita("");
       setPesan("Ulasan berhasil dikirim dan menunggu persetujuan admin.");
-    } catch {
-      setPesan("Gagal menyimpan ulasan. Silakan coba lagi.");
+    } catch (err) {
+      setPesan(errorMessage(err));
+    } finally {
+      setBusy(false);
     }
   }
-
-  const disetujui = daftar.filter(
-    (item) => item.status === "approved"
-  );
 
   return (
   <section id="memories">
@@ -117,8 +115,8 @@ export default function WallOfMemories() {
                   />
                 </label>
 
-                <button type="submit" className="memory-submit">
-                  Kirim Ulasan
+                <button type="submit" disabled={busy} className="memory-submit">
+                  {busy ? "Mengirim..." : "Kirim Ulasan"}
                 </button>
               </form>
             )}
@@ -133,13 +131,13 @@ export default function WallOfMemories() {
           <div className="memory-list-area">
             <h3>Kenangan Pengunjung</h3>
 
-            {disetujui.length === 0 ? (
+            {daftar.length === 0 ? (
               <p className="empty-memory">
                 Belum ada ulasan yang ditampilkan.
               </p>
             ) : (
               <div className="memory-list">
-                {disetujui.map((item) => (
+                {daftar.map((item) => (
                   <div className="memory-note" key={item.id}>
                     <h4>{item.nama}</h4>
                     <p className="story-rating">

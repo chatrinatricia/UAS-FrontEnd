@@ -112,21 +112,3 @@ export const TEMPAT_AWAL: Tempat[] = [
     gambar: "/images/mpokayu.webp",
   },
 ];
-
-export const KUNCI_TEMPAT = "kt_tempat";
-
-export function bacaTempat(): Tempat[] {
-  if (typeof window === "undefined") return TEMPAT_AWAL;
-
-  try {
-    const data = localStorage.getItem(KUNCI_TEMPAT);
-    return data === null ? TEMPAT_AWAL : JSON.parse(data);
-  } catch {
-    return TEMPAT_AWAL;
-  }
-}
-
-export function simpanTempat(data: Tempat[]) {
-  localStorage.setItem(KUNCI_TEMPAT, JSON.stringify(data));
-  window.dispatchEvent(new Event("tempat-updated"));
-}

@@ -11,4 +11,6 @@
 export type * from './models/User'
 export type * from './models/HeroSlide'
 export type * from './models/AboutContent'
+export type * from './models/Memory'
+export type * from './models/Place'
 export type * from './commonInputTypes'

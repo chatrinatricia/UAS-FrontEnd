@@ -56,3 +56,13 @@ export type HeroSlide = Prisma.HeroSlideModel
  * 
  */
 export type AboutContent = Prisma.AboutContentModel
+/**
+ * Model Memory
+ * 
+ */
+export type Memory = Prisma.MemoryModel
+/**
+ * Model Place
+ * 
+ */
+export type Place = Prisma.PlaceModel

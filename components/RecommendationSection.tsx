@@ -1,32 +1,6 @@
+import type { Tempat } from "@/lib/recommendations";
 
-"use client";
-
-import { useEffect, useState } from "react";
-import {
-  bacaTempat,
-  TEMPAT_AWAL,
-  type Tempat,
-} from "@/lib/recommendations";
-
-export default function RecommendationSection() {
-  const [tempat, setTempat] = useState<Tempat[]>(TEMPAT_AWAL);
-
-  useEffect(() => {
-    function muatData() {
-      setTempat(bacaTempat());
-    }
-
-    muatData();
-
-    window.addEventListener("storage", muatData);
-    window.addEventListener("tempat-updated", muatData);
-
-    return () => {
-      window.removeEventListener("storage", muatData);
-      window.removeEventListener("tempat-updated", muatData);
-    };
-  }, []);
-
+export default function RecommendationSection({ tempat }: { tempat: Tempat[] }) {
   function formatRupiah(angka: number) {
     return "IDR " + angka.toLocaleString("id-ID");
   }
