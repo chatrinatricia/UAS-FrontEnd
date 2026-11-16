@@ -14,17 +14,7 @@ export default function VisitorLogout() {
   }
 
   return (
-    <button
-      type="button"
-      id="btn-logout-user"
-      className="nav-link fw-semibold"
-      onClick={handleLogout}
-      style={{
-        background: "none",
-        border: "none",
-        cursor: "pointer",
-      }}
-    >
+    <button type="button" id="btn-logout-user" className="btn-logout" onClick={handleLogout}>
       Logout
     </button>
   );

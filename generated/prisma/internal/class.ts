@@ -19,8 +19,8 @@ const config: runtime.GetPrismaClientConfig = {
   "previewFeatures": [],
   "clientVersion": "7.10.1",
   "engineVersion": "d1b3f377ca835d73fd50954a5e22128b9ebdd6b8",
-  "activeProvider": "sqlite",
-  "inlineSchema": "// Skema database bagian Chatrina.\n// Teman satu kelompok menambahkan model miliknya sendiri di bawah (Place, Review, History, Video).\n\ngenerator client {\n  provider = \"prisma-client\"\n  output   = \"../generated/prisma\"\n}\n\ndatasource db {\n  provider = \"sqlite\"\n}\n\nenum Role {\n  USER\n  ADMIN\n}\n\n// Akun. Admin dipakai untuk login dashboard; USER dipakai Ko Andre untuk login pengunjung.\nmodel User {\n  id           Int      @id @default(autoincrement())\n  username     String   @unique\n  passwordHash String\n  role         Role     @default(USER)\n  createdAt    DateTime @default(now())\n}\n\n// Slide di bagian hero (tampilan awal)\nmodel HeroSlide {\n  id        Int    @id @default(autoincrement())\n  title     String\n  subtitle  String\n  imageUrl  String\n  sortOrder Int    @default(0)\n}\n\n// Isi bagian \"Pengenalan\". Hanya ada SATU baris (id selalu 1).\nmodel AboutContent {\n  id            Int    @id @default(1)\n  title         String\n  heading       String\n  paragraph     String\n  quote         String\n  image         String\n  feature1Title String\n  feature1Text  String\n  feature2Title String\n  feature2Text  String\n}\n",
+  "activeProvider": "postgresql",
+  "inlineSchema": "// Skema database bagian Chatrina.\n// Teman satu kelompok menambahkan model miliknya sendiri di bawah (Place, Review, History, Video).\n\ngenerator client {\n  provider = \"prisma-client\"\n  output   = \"../generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\nenum Role {\n  USER\n  ADMIN\n}\n\n// Akun. Admin dipakai untuk login dashboard; USER dipakai Ko Andre untuk login pengunjung.\nmodel User {\n  id           Int      @id @default(autoincrement())\n  username     String   @unique\n  passwordHash String\n  role         Role     @default(USER)\n  createdAt    DateTime @default(now())\n}\n\n// Slide di bagian hero (tampilan awal)\nmodel HeroSlide {\n  id        Int    @id @default(autoincrement())\n  title     String\n  subtitle  String\n  imageUrl  String\n  sortOrder Int    @default(0)\n}\n\n// Isi bagian \"Pengenalan\". Hanya ada SATU baris (id selalu 1).\nmodel AboutContent {\n  id            Int    @id @default(1)\n  title         String\n  heading       String\n  paragraph     String\n  quote         String\n  image         String\n  feature1Title String\n  feature1Text  String\n  feature2Title String\n  feature2Text  String\n}\n",
   "runtimeDataModel": {
     "models": {},
     "enums": {},
@@ -45,10 +45,10 @@ async function decodeBase64AsWasm(wasmBase64: string): Promise<WebAssembly.Modul
 }
 
 config.compilerWasm = {
-  getRuntime: async () => await import("@prisma/client/runtime/query_compiler_fast_bg.sqlite.mjs"),
+  getRuntime: async () => await import("@prisma/client/runtime/query_compiler_fast_bg.postgresql.mjs"),
 
   getQueryCompilerWasmModule: async () => {
-    const { wasm } = await import("@prisma/client/runtime/query_compiler_fast_bg.sqlite.wasm-base64.mjs")
+    const { wasm } = await import("@prisma/client/runtime/query_compiler_fast_bg.postgresql.wasm-base64.mjs")
     return await decodeBase64AsWasm(wasm)
   },
 

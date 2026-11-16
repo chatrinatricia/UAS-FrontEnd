@@ -559,3 +559,156 @@ h1, h2, h3, h4, h5 {
     font-size: 34px;
   }
 }
+
+section.about-section {
+  padding: 3.5rem 0;
+  scroll-margin-top: 80px;
+}
+
+.about-title {
+  text-align: center;
+  font-size: clamp(1.75rem, 1.2rem + 1.6vw, 2.5rem);
+  font-weight: 700;
+  margin-bottom: 2rem;
+}
+
+.about-photo {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(92, 44, 22, 0.2);
+}
+
+.about-photo-img {
+  object-fit: cover;
+}
+
+.about-heading {
+  font-size: 1.6rem;
+  margin-bottom: 0.75rem;
+}
+
+.about-text {
+  margin-bottom: 1rem;
+  line-height: 1.7;
+}
+
+.about-quote {
+  margin: 0 0 1.5rem;
+  padding: 0.25rem 0 0.25rem 1rem;
+  border-left: 3px solid var(--kt-gold);
+  font-style: italic;
+}
+
+.about-feature h4 {
+  font-size: 1.1rem;
+  margin-bottom: 0.4rem;
+}
+
+.about-feature p {
+  margin-bottom: 0;
+  font-size: 0.95rem;
+}
+
+@media (min-width: 992px) {
+  .about-photo {
+    aspect-ratio: 4 / 3;
+  }
+
+  .about-heading {
+    font-size: 1.9rem;
+  }
+}
+
+@media (max-width: 768px) {
+  section.about-section {
+    padding: 2.5rem 0;
+  }
+
+  .about-title {
+    margin-bottom: 1.5rem;
+  }
+
+.site-navbar {
+  background-color: var(--kt-cream);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.45);
+  box-shadow: 0 2px 10px rgba(92, 44, 22, 0.08);
+  padding-top: 0.4rem;
+  padding-bottom: 0.4rem;
+}
+
+.site-navbar .navbar-brand {
+  padding: 0;
+}
+
+.site-navbar .site-nav-link {
+  position: relative;
+  padding: 0.5rem 0.85rem;
+  font-weight: 600;
+  color: var(--kt-darkwood);
+  transition: color 0.2s;
+}
+
+.site-navbar .site-nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0.85rem;
+  right: 0.85rem;
+  bottom: 0.1rem;
+  height: 2px;
+  background-color: var(--kt-gold);
+  transform: scaleX(0);
+  transition: transform 0.2s ease;
+}
+
+.site-navbar .site-nav-link:hover,
+.site-navbar .site-nav-link.active {
+  color: var(--kt-terracotta);
+}
+
+.site-navbar .site-nav-link:hover::after,
+.site-navbar .site-nav-link.active::after {
+  transform: scaleX(1);
+}
+
+.site-navbar .nav-logout {
+  display: flex;
+  align-items: center;
+}
+
+.site-navbar .btn-logout {
+  margin-left: 0.75rem;
+  padding: 0.4rem 1.1rem;
+  border: 1.5px solid var(--kt-terracotta);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--kt-terracotta);
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.2;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.site-navbar .btn-logout:hover {
+  background-color: var(--kt-terracotta);
+  color: #fff;
+}
+
+@media (max-width: 991px) {
+  .site-navbar .site-nav-link::after {
+    left: 0.25rem;
+    right: 0.25rem;
+  }
+
+  .site-navbar .nav-logout {
+    margin-top: 0.5rem;
+  }
+
+  .site-navbar .btn-logout {
+    margin-left: 0;
+  }
+}
+}

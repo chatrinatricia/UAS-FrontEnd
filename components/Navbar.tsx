@@ -1,4 +1,5 @@
 "use client";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -7,20 +8,45 @@ import Nav from "react-bootstrap/Nav";
 import RBNavbar from "react-bootstrap/Navbar";
 import VisitorLogout from "@/components/VisitorLogout";
 
-type Menu = { href: string; label: string };
+type Menu = { id: string; label: string };
 
+// id harus sama dengan id section di halaman utama
 const menus: Menu[] = [
-  { href: "/#pengenalan", label: "Pengenalan" },
-  { href: "/#sejarah", label: "Sejarah" },
-  { href: "/#pembuatan", label: "Cara Pembuatan" },
-  { href: "/#rekomendasi", label: "Rekomendasi Tempat" },
-  { href: "/#memories", label: "Wall of Memories" },
+  { id: "pengenalan", label: "Pengenalan" },
+  { id: "sejarah", label: "Sejarah" },
+  { id: "pembuatan", label: "Cara Pembuatan" },
+  { id: "rekomendasi", label: "Rekomendasi Tempat" },
+  { id: "memories", label: "Wall of Memories" },
 ];
 
 const HIDDEN_ON = ["/login", "/loginuser", "/register", "/admin"];
 
 export default function Navbar() {
   const pathname = usePathname();
+  const [active, setActive] = useState("");
+
+  // Scroll-spy (seperti di modul): tandai menu sesuai section yang sedang tampil
+  useEffect(() => {
+    if (pathname !== "/") return;
+
+    function onScroll() {
+      let current = "";
+      for (const menu of menus) {
+        const el = document.getElementById(menu.id);
+        if (el && el.getBoundingClientRect().top <= 120) current = menu.id;
+      }
+      // Mentok di dasar halaman: section terakhir dianggap aktif
+      if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 4) {
+        current = menus[menus.length - 1].id;
+      }
+      setActive(current);
+    }
+
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [pathname]);
+
   if (HIDDEN_ON.some((p) => pathname.startsWith(p))) return null;
 
   return (
@@ -37,11 +63,17 @@ export default function Navbar() {
         <RBNavbar.Collapse id="menu-utama">
           <Nav className="ms-auto align-items-lg-center">
             {menus.map((menu) => (
-              <Nav.Link as={Link} href={menu.href} key={menu.href} className="fw-semibold">
+              <Nav.Link
+                as={Link}
+                href={`/#${menu.id}`}
+                key={menu.id}
+                active={active === menu.id}
+                className="site-nav-link"
+              >
                 {menu.label}
               </Nav.Link>
             ))}
-            <Nav.Item className="ms-lg-3">
+            <Nav.Item className="nav-logout">
               <VisitorLogout />
             </Nav.Item>
           </Nav>
