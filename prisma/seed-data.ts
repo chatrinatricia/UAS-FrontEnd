@@ -32,3 +32,22 @@ export const ABOUT = {
   feature2Title: "Serundeng & Ebi",
   feature2Text: "Memberikan aroma harum khas yang menggugah selera.",
 };
+
+export const SEJARAH_SEED = [
+  {
+    era: "Era 1920-an",
+    judul: "Awal Mula Ciptaan Tanpa Sengaja",
+    deskripsi: "Kerak telor konon bermula dari eksperimen masyarakat Betawi di sekitar kawasan Batavia yang memanfaatkan melimpahnya buah kelapa dan beras ketan.",
+    gambar: "/images/kerak-telor-utama.jpeg",
+    caption: "Suasana Batavia tempo dulu",
+    order: 1,
+  },
+  {
+    era: "Era 1970-an",
+    judul: "Eksistensi Abang Penjual Pikul",
+    deskripsi: "Pada masa ini, penjual kerak telor mulai menjajakan dagangannya secara keliling menggunakan pikulan arang tradisional ke berbagai pusat keramaian dan pesta rakyat.",
+    gambar: "/images/masak-kerak-telor-bang.jpeg",
+    caption: "Abang penjual kerak telor tradisional",
+    order: 2,
+  },
+];

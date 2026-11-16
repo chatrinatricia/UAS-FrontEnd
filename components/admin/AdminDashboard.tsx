@@ -15,6 +15,7 @@ import MemoriesEditor from "@/components/admin/MemoriesEditor";
 import { api } from "@/lib/api";
 import type { Memory } from "@/lib/memories";
 import type { AboutContent, HeroSlide } from "@/lib/types";
+import SejarahManager from "@/components/admin/SejarahManager";
 
 type AdminDashboardProps = {
   username: string;
