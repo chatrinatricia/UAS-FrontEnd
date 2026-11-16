@@ -33,6 +33,7 @@ export default function AdminDashboard({ username, initialTempat, initialSlides,
   const [slides, setSlides] = useState(initialSlides);
   const [memories, setMemories] = useState(initialMemories);
   const [toast, setToast] = useState<Toast | null>(null);
+  const [menuOpen, setMenuOpen] = useState(false); // responsive: buka/tutup sidebar di HP
 
   // Pesan sukses/gagal yang hilang sendiri setelah 3 detik
   function notify(text: string, type: "success" | "danger" = "success") {
@@ -47,9 +48,23 @@ export default function AdminDashboard({ username, initialTempat, initialSlides,
   }
 
   return (
-    <Tab.Container defaultActiveKey="tampilan">
+    <Tab.Container defaultActiveKey="tampilan" onSelect={() => setMenuOpen(false)}>
+      {/* responsive: bar atas + tombol hamburger, hanya tampil di bawah 768px */}
+      <div className="admin-topbar d-md-none">
+        <button
+          type="button"
+          className="admin-menu-btn"
+          aria-label="Buka menu admin"
+          aria-expanded={menuOpen}
+          onClick={() => setMenuOpen((open) => !open)}
+        >
+          {menuOpen ? "✕" : "☰"}
+        </button>
+        <span className="fw-bold">Admin Kerak Telor</span>
+      </div>
+
       <Row className="g-0 min-vh-100">
-        <Col md={3} lg={2} className="admin-sidebar p-3 d-flex flex-column">
+        <Col md={3} lg={2} className={`admin-sidebar p-3 d-flex flex-column ${menuOpen ? "open" : ""}`}>
           <Image src="/images/logo.jpeg" alt="Logo Kerak Telor" width={64} height={64} className="auth-logo" />
           <h2 className="text-center fs-5 fw-bold text-white mb-1">Admin Kerak Telor</h2>
           <p className="text-center small mb-4 opacity-75">Masuk sebagai {username}</p>
@@ -63,7 +78,7 @@ export default function AdminDashboard({ username, initialTempat, initialSlides,
           <Button variant="outline-light" size="sm" className="mt-3" onClick={handleLogout}>Keluar</Button>
         </Col>
 
-        <Col md={9} lg={10} className="p-4 bg-light overflow-auto">
+        <Col md={9} lg={10} className="p-3 p-md-4 bg-light overflow-auto">
           <Tab.Content>
             <Tab.Pane eventKey="tampilan">
               <h1 className="fs-3 fw-bold mb-4">Tampilan Awal & Pengenalan</h1>
@@ -80,7 +95,7 @@ export default function AdminDashboard({ username, initialTempat, initialSlides,
       </Row>
 
       {toast && (
-        <Alert variant={toast.type} className="position-fixed top-0 end-0 m-4 shadow" style={{ zIndex: 1100 }}>
+        <Alert variant={toast.type} className="position-fixed top-0 end-0 m-2 m-md-4 shadow" style={{ zIndex: 1100 }}>
           {toast.text}
         </Alert>
       )}

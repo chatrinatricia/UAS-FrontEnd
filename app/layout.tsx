@@ -1,8 +1,9 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import { Playfair_Display, Plus_Jakarta_Sans } from "next/font/google";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./globals.css";
+import "./responsive.css";
 import { getSession } from "@/lib/auth";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -15,6 +16,12 @@ export const metadata: Metadata = {
   description:
     "Website edukasi dan promosi kuliner Kerak Telor Betawi: sejarah, cara pembuatan, rekomendasi tempat di Jakarta, dan ulasan pengunjung.",
   icons: { icon: "/images/logo.jpeg" },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#8b4513",
 };
 
 export default async function RootLayout({ children }: { children: ReactNode }) {

@@ -21,12 +21,17 @@ export default function VisitorLogout() {
     }
   }
 
-  return (
+    return (
     <>
-      <button type="button" id="btn-logout-user" className="nav-link fw-semibold" disabled={busy} onClick={handleLogout}>
+      <button
+        type="button"
+        id="btn-logout-user"
+        className="btn-logout"
+        disabled={busy}
+        onClick={handleLogout}
+      >
         {busy ? "Memproses..." : "Logout"}
       </button>
       {error && <span role="alert">{error}</span>}
     </>
   );
-}
