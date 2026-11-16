@@ -124,8 +124,13 @@ export type MemoryScalarFieldEnum = (typeof MemoryScalarFieldEnum)[keyof typeof 
 
 export const SejarahScalarFieldEnum = {
   id: 'id',
+  era: 'era',
   judul: 'judul',
-  konten: 'konten',
+  deskripsi: 'deskripsi',
+  gambar: 'gambar',
+  caption: 'caption',
+  order: 'order',
+  createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 

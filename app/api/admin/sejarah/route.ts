@@ -1,41 +1,40 @@
-// app/api/admin/sejarah/route.ts
-import { NextResponse } from 'next/server'
-import { prisma } from '@/lib/prisma'
+import { NextResponse } from "next/server";
+import { adminOnly } from "@/lib/auth";
+import { prisma } from "@/lib/prisma";
 
-// GET: Mengambil data sejarah
 export async function GET() {
+  const denied = await adminOnly();
+  if (denied) return denied;
+
   try {
-    const sejarah = await prisma.sejarah.findFirst()
-    return NextResponse.json(sejarah || { judul: '', konten: '' })
-  } catch (error) {
-    return NextResponse.json({ error: 'Gagal memuat data' }, { status: 500 })
+    const sejarah = await prisma.sejarah.findFirst();
+    return NextResponse.json(sejarah || { judul: "", deskripsi: "" });
+  } catch {
+    return NextResponse.json({ error: "Gagal memuat data" }, { status: 500 });
   }
 }
 
-// POST: Memperbarui atau membuat data sejarah baru
+// POST: perbarui sejarah, atau buat baru kalau belum ada (khusus admin)
 export async function POST(request: Request) {
+  const denied = await adminOnly();
+  if (denied) return denied;
+
   try {
-    const { judul, konten } = await request.json()
+    const body = await request.json();
+    const judul = typeof body.judul === "string" ? body.judul.trim() : "";
+    const deskripsi = typeof body.deskripsi === "string" ? body.deskripsi.trim() : "";
 
-    // Cek apakah data sejarah sudah ada di database
-    const existing = await prisma.sejarah.findFirst()
-
-    let result
-    if (existing) {
-      // Update jika sudah ada
-      result = await prisma.sejarah.update({
-        where: { id: existing.id },
-        data: { judul, konten },
-      })
-    } else {
-      // Buat baru jika belum ada
-      result = await prisma.sejarah.create({
-        data: { judul, konten },
-      })
+    if (!judul || !deskripsi) {
+      return NextResponse.json({ error: "Judul dan deskripsi wajib diisi" }, { status: 400 });
     }
 
-    return NextResponse.json({ success: true, data: result })
-  } catch (error) {
-    return NextResponse.json({ error: 'Gagal menyimpan data' }, { status: 500 })
+    const existing = await prisma.sejarah.findFirst();
+    const result = existing
+      ? await prisma.sejarah.update({ where: { id: existing.id }, data: { judul, deskripsi } })
+      : await prisma.sejarah.create({ data: { judul, deskripsi } });
+
+    return NextResponse.json({ success: true, data: result });
+  } catch {
+    return NextResponse.json({ error: "Gagal menyimpan data" }, { status: 500 });
   }
 }

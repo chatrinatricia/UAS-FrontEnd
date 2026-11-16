@@ -1,3 +1,3 @@
-import type { HeroSlide, AboutContent } from "@/generated/prisma/client";
+import type { HeroSlide, AboutContent, Sejarah } from "@/generated/prisma/client";
 
-export type { HeroSlide, AboutContent };
+export type { HeroSlide, AboutContent, Sejarah };

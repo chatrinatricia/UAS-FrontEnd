@@ -60,8 +60,13 @@ model Memory {
 }
 
 model Sejarah {
-  id        Int      @id @default(autoincrement())
-  judul     String
-  konten    String   // Hapus bagian @db.Text di sini
-  updatedAt DateTime @updatedAt
+  id          String   @id @default(uuid())
+  era         String?  
+  judul       String   
+  deskripsi   String   // Hapus @db.Text di sini
+  gambar      String?  
+  caption     String?  
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }

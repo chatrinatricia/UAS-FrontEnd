@@ -27,62 +27,92 @@ export type AggregateSejarah = {
 }
 
 export type SejarahAvgAggregateOutputType = {
-  id: number | null
+  order: number | null
 }
 
 export type SejarahSumAggregateOutputType = {
-  id: number | null
+  order: number | null
 }
 
 export type SejarahMinAggregateOutputType = {
-  id: number | null
+  id: string | null
+  era: string | null
   judul: string | null
-  konten: string | null
+  deskripsi: string | null
+  gambar: string | null
+  caption: string | null
+  order: number | null
+  createdAt: Date | null
   updatedAt: Date | null
 }
 
 export type SejarahMaxAggregateOutputType = {
-  id: number | null
+  id: string | null
+  era: string | null
   judul: string | null
-  konten: string | null
+  deskripsi: string | null
+  gambar: string | null
+  caption: string | null
+  order: number | null
+  createdAt: Date | null
   updatedAt: Date | null
 }
 
 export type SejarahCountAggregateOutputType = {
   id: number
+  era: number
   judul: number
-  konten: number
+  deskripsi: number
+  gambar: number
+  caption: number
+  order: number
+  createdAt: number
   updatedAt: number
   _all: number
 }
 
 
 export type SejarahAvgAggregateInputType = {
-  id?: true
+  order?: true
 }
 
 export type SejarahSumAggregateInputType = {
-  id?: true
+  order?: true
 }
 
 export type SejarahMinAggregateInputType = {
   id?: true
+  era?: true
   judul?: true
-  konten?: true
+  deskripsi?: true
+  gambar?: true
+  caption?: true
+  order?: true
+  createdAt?: true
   updatedAt?: true
 }
 
 export type SejarahMaxAggregateInputType = {
   id?: true
+  era?: true
   judul?: true
-  konten?: true
+  deskripsi?: true
+  gambar?: true
+  caption?: true
+  order?: true
+  createdAt?: true
   updatedAt?: true
 }
 
 export type SejarahCountAggregateInputType = {
   id?: true
+  era?: true
   judul?: true
-  konten?: true
+  deskripsi?: true
+  gambar?: true
+  caption?: true
+  order?: true
+  createdAt?: true
   updatedAt?: true
   _all?: true
 }
@@ -174,9 +204,14 @@ export type SejarahGroupByArgs<ExtArgs extends runtime.Types.Extensions.Internal
 }
 
 export type SejarahGroupByOutputType = {
-  id: number
+  id: string
+  era: string | null
   judul: string
-  konten: string
+  deskripsi: string
+  gambar: string | null
+  caption: string | null
+  order: number
+  createdAt: Date
   updatedAt: Date
   _count: SejarahCountAggregateOutputType | null
   _avg: SejarahAvgAggregateOutputType | null
@@ -204,33 +239,53 @@ export type SejarahWhereInput = {
   AND?: Prisma.SejarahWhereInput | Prisma.SejarahWhereInput[]
   OR?: Prisma.SejarahWhereInput[]
   NOT?: Prisma.SejarahWhereInput | Prisma.SejarahWhereInput[]
-  id?: Prisma.IntFilter<"Sejarah"> | number
+  id?: Prisma.StringFilter<"Sejarah"> | string
+  era?: Prisma.StringNullableFilter<"Sejarah"> | string | null
   judul?: Prisma.StringFilter<"Sejarah"> | string
-  konten?: Prisma.StringFilter<"Sejarah"> | string
+  deskripsi?: Prisma.StringFilter<"Sejarah"> | string
+  gambar?: Prisma.StringNullableFilter<"Sejarah"> | string | null
+  caption?: Prisma.StringNullableFilter<"Sejarah"> | string | null
+  order?: Prisma.IntFilter<"Sejarah"> | number
+  createdAt?: Prisma.DateTimeFilter<"Sejarah"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Sejarah"> | Date | string
 }
 
 export type SejarahOrderByWithRelationInput = {
   id?: Prisma.SortOrder
+  era?: Prisma.SortOrderInput | Prisma.SortOrder
   judul?: Prisma.SortOrder
-  konten?: Prisma.SortOrder
+  deskripsi?: Prisma.SortOrder
+  gambar?: Prisma.SortOrderInput | Prisma.SortOrder
+  caption?: Prisma.SortOrderInput | Prisma.SortOrder
+  order?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type SejarahWhereUniqueInput = Prisma.AtLeast<{
-  id?: number
+  id?: string
   AND?: Prisma.SejarahWhereInput | Prisma.SejarahWhereInput[]
   OR?: Prisma.SejarahWhereInput[]
   NOT?: Prisma.SejarahWhereInput | Prisma.SejarahWhereInput[]
+  era?: Prisma.StringNullableFilter<"Sejarah"> | string | null
   judul?: Prisma.StringFilter<"Sejarah"> | string
-  konten?: Prisma.StringFilter<"Sejarah"> | string
+  deskripsi?: Prisma.StringFilter<"Sejarah"> | string
+  gambar?: Prisma.StringNullableFilter<"Sejarah"> | string | null
+  caption?: Prisma.StringNullableFilter<"Sejarah"> | string | null
+  order?: Prisma.IntFilter<"Sejarah"> | number
+  createdAt?: Prisma.DateTimeFilter<"Sejarah"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Sejarah"> | Date | string
 }, "id">
 
 export type SejarahOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
+  era?: Prisma.SortOrderInput | Prisma.SortOrder
   judul?: Prisma.SortOrder
-  konten?: Prisma.SortOrder
+  deskripsi?: Prisma.SortOrder
+  gambar?: Prisma.SortOrderInput | Prisma.SortOrder
+  caption?: Prisma.SortOrderInput | Prisma.SortOrder
+  order?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.SejarahCountOrderByAggregateInput
   _avg?: Prisma.SejarahAvgOrderByAggregateInput
@@ -243,126 +298,213 @@ export type SejarahScalarWhereWithAggregatesInput = {
   AND?: Prisma.SejarahScalarWhereWithAggregatesInput | Prisma.SejarahScalarWhereWithAggregatesInput[]
   OR?: Prisma.SejarahScalarWhereWithAggregatesInput[]
   NOT?: Prisma.SejarahScalarWhereWithAggregatesInput | Prisma.SejarahScalarWhereWithAggregatesInput[]
-  id?: Prisma.IntWithAggregatesFilter<"Sejarah"> | number
+  id?: Prisma.StringWithAggregatesFilter<"Sejarah"> | string
+  era?: Prisma.StringNullableWithAggregatesFilter<"Sejarah"> | string | null
   judul?: Prisma.StringWithAggregatesFilter<"Sejarah"> | string
-  konten?: Prisma.StringWithAggregatesFilter<"Sejarah"> | string
+  deskripsi?: Prisma.StringWithAggregatesFilter<"Sejarah"> | string
+  gambar?: Prisma.StringNullableWithAggregatesFilter<"Sejarah"> | string | null
+  caption?: Prisma.StringNullableWithAggregatesFilter<"Sejarah"> | string | null
+  order?: Prisma.IntWithAggregatesFilter<"Sejarah"> | number
+  createdAt?: Prisma.DateTimeWithAggregatesFilter<"Sejarah"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Sejarah"> | Date | string
 }
 
 export type SejarahCreateInput = {
+  id?: string
+  era?: string | null
   judul: string
-  konten: string
+  deskripsi: string
+  gambar?: string | null
+  caption?: string | null
+  order?: number
+  createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type SejarahUncheckedCreateInput = {
-  id?: number
+  id?: string
+  era?: string | null
   judul: string
-  konten: string
+  deskripsi: string
+  gambar?: string | null
+  caption?: string | null
+  order?: number
+  createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type SejarahUpdateInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  era?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   judul?: Prisma.StringFieldUpdateOperationsInput | string
-  konten?: Prisma.StringFieldUpdateOperationsInput | string
+  deskripsi?: Prisma.StringFieldUpdateOperationsInput | string
+  gambar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  caption?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  order?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type SejarahUncheckedUpdateInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  era?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   judul?: Prisma.StringFieldUpdateOperationsInput | string
-  konten?: Prisma.StringFieldUpdateOperationsInput | string
+  deskripsi?: Prisma.StringFieldUpdateOperationsInput | string
+  gambar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  caption?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  order?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type SejarahCreateManyInput = {
-  id?: number
+  id?: string
+  era?: string | null
   judul: string
-  konten: string
+  deskripsi: string
+  gambar?: string | null
+  caption?: string | null
+  order?: number
+  createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type SejarahUpdateManyMutationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  era?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   judul?: Prisma.StringFieldUpdateOperationsInput | string
-  konten?: Prisma.StringFieldUpdateOperationsInput | string
+  deskripsi?: Prisma.StringFieldUpdateOperationsInput | string
+  gambar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  caption?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  order?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type SejarahUncheckedUpdateManyInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  era?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   judul?: Prisma.StringFieldUpdateOperationsInput | string
-  konten?: Prisma.StringFieldUpdateOperationsInput | string
+  deskripsi?: Prisma.StringFieldUpdateOperationsInput | string
+  gambar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  caption?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  order?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type SejarahCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  era?: Prisma.SortOrder
   judul?: Prisma.SortOrder
-  konten?: Prisma.SortOrder
+  deskripsi?: Prisma.SortOrder
+  gambar?: Prisma.SortOrder
+  caption?: Prisma.SortOrder
+  order?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type SejarahAvgOrderByAggregateInput = {
-  id?: Prisma.SortOrder
+  order?: Prisma.SortOrder
 }
 
 export type SejarahMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  era?: Prisma.SortOrder
   judul?: Prisma.SortOrder
-  konten?: Prisma.SortOrder
+  deskripsi?: Prisma.SortOrder
+  gambar?: Prisma.SortOrder
+  caption?: Prisma.SortOrder
+  order?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type SejarahMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  era?: Prisma.SortOrder
   judul?: Prisma.SortOrder
-  konten?: Prisma.SortOrder
+  deskripsi?: Prisma.SortOrder
+  gambar?: Prisma.SortOrder
+  caption?: Prisma.SortOrder
+  order?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type SejarahSumOrderByAggregateInput = {
-  id?: Prisma.SortOrder
+  order?: Prisma.SortOrder
+}
+
+export type NullableStringFieldUpdateOperationsInput = {
+  set?: string | null
 }
 
 
 
 export type SejarahSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  era?: boolean
   judul?: boolean
-  konten?: boolean
+  deskripsi?: boolean
+  gambar?: boolean
+  caption?: boolean
+  order?: boolean
+  createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["sejarah"]>
 
 export type SejarahSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  era?: boolean
   judul?: boolean
-  konten?: boolean
+  deskripsi?: boolean
+  gambar?: boolean
+  caption?: boolean
+  order?: boolean
+  createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["sejarah"]>
 
 export type SejarahSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  era?: boolean
   judul?: boolean
-  konten?: boolean
+  deskripsi?: boolean
+  gambar?: boolean
+  caption?: boolean
+  order?: boolean
+  createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["sejarah"]>
 
 export type SejarahSelectScalar = {
   id?: boolean
+  era?: boolean
   judul?: boolean
-  konten?: boolean
+  deskripsi?: boolean
+  gambar?: boolean
+  caption?: boolean
+  order?: boolean
+  createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type SejarahOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "judul" | "konten" | "updatedAt", ExtArgs["result"]["sejarah"]>
+export type SejarahOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "era" | "judul" | "deskripsi" | "gambar" | "caption" | "order" | "createdAt" | "updatedAt", ExtArgs["result"]["sejarah"]>
 
 export type $SejarahPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Sejarah"
   objects: {}
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: number
+    id: string
+    era: string | null
     judul: string
-    konten: string
+    deskripsi: string
+    gambar: string | null
+    caption: string | null
+    order: number
+    createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["sejarah"]>
   composites: {}
@@ -787,9 +929,14 @@ export interface Prisma__SejarahClient<T, Null = never, ExtArgs extends runtime.
  * Fields of the Sejarah model
  */
 export interface SejarahFieldRefs {
-  readonly id: Prisma.FieldRef<"Sejarah", 'Int'>
+  readonly id: Prisma.FieldRef<"Sejarah", 'String'>
+  readonly era: Prisma.FieldRef<"Sejarah", 'String'>
   readonly judul: Prisma.FieldRef<"Sejarah", 'String'>
-  readonly konten: Prisma.FieldRef<"Sejarah", 'String'>
+  readonly deskripsi: Prisma.FieldRef<"Sejarah", 'String'>
+  readonly gambar: Prisma.FieldRef<"Sejarah", 'String'>
+  readonly caption: Prisma.FieldRef<"Sejarah", 'String'>
+  readonly order: Prisma.FieldRef<"Sejarah", 'Int'>
+  readonly createdAt: Prisma.FieldRef<"Sejarah", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Sejarah", 'DateTime'>
 }
     
