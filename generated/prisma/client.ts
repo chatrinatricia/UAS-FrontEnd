@@ -62,7 +62,7 @@ export type AboutContent = Prisma.AboutContentModel
  */
 export type Memory = Prisma.MemoryModel
 /**
- * Model Sejarah
+ * Model Place
  * 
  */
-export type Sejarah = Prisma.SejarahModel
+export type Place = Prisma.PlaceModel

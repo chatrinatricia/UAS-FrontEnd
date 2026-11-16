@@ -10,8 +10,8 @@ import { ABOUT } from "@/prisma/seed-data";
 export default async function HomePage() {
   await connection();
 
-  const [slides, about, sejarah, memories] = await Promise.all([
-    prisma.heroSlide.findMany(),
+  const [slides, about, memories, tempat] = await Promise.all([
+    prisma.heroSlide.findMany({ orderBy: { sortOrder: "asc" } }),
     prisma.aboutContent.findUnique({ where: { id: 1 } }),
     prisma.sejarah.findMany({ orderBy: { order: "asc" } }),
     prisma.memory.findMany({
@@ -19,14 +19,14 @@ export default async function HomePage() {
       select: { id: true, nama: true, cerita: true, rating: true },
       orderBy: { tanggal: "desc" },
     }),
+    prisma.place.findMany({ orderBy: { id: "asc" } }),
   ]);
 
   return (
     <>
       <HeroSection slides={slides} />
       <AboutSection about={about ?? ABOUT} />
-      <SejarahSection sejarah={sejarah} />
-      <RecommendationSection />
+      <RecommendationSection tempat={tempat} />
       <WallOfMemories daftar={memories} />
     </>
   );

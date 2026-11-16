@@ -9,15 +9,17 @@ export default async function AdminPage() {
   const session = await getSession();
   if (session?.role !== "ADMIN") redirect("/admin/login");
 
-  const [slides, about, memories] = await Promise.all([
+  const [slides, about, memories, tempat] = await Promise.all([
     prisma.heroSlide.findMany({ orderBy: { sortOrder: "asc" } }),
     prisma.aboutContent.findUnique({ where: { id: 1 } }),
     prisma.memory.findMany({ select: memoryFields, orderBy: { tanggal: "desc" } }),
+    prisma.place.findMany({ orderBy: { id: "asc" } }),
   ]);
 
   return (
     <AdminDashboard
       username={session.username}
+      initialTempat={tempat}
       initialSlides={slides}
       initialAbout={about ?? ABOUT}
       initialMemories={memories.map((item) => ({ ...item, tanggal: item.tanggal.toISOString() }))}

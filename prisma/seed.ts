@@ -1,4 +1,5 @@
 import "dotenv/config";
+import { TEMPAT_AWAL } from "../lib/recommendations";
 import { PrismaClient } from "../generated/prisma/client";
 import { PrismaBetterSqlite3 } from "@prisma/adapter-better-sqlite3";
 import { hash } from "bcryptjs";
@@ -35,6 +36,10 @@ const SEJARAH_DATA = [
 ];
 
 async function main() {
+  if (await prisma.place.count() === 0) {
+    await prisma.place.createMany({ data: TEMPAT_AWAL });
+  }
+
   await prisma.heroSlide.deleteMany();
   await prisma.heroSlide.createMany({ data: HERO_SLIDES });
 
