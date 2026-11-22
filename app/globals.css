@@ -234,9 +234,12 @@ h1, h2, h3, h4, h5 {
 }
 
 .rekomendasi-section .section-heading {
+  display: grid;
+  justify-items: center;
   text-align: center;
-  max-width: 640px;
-  margin: 0 auto 48px;
+  width: 100%;
+  max-width: 840px;
+  margin: 0 auto 32px;
 }
 
 .rekomendasi-section .section-label {
@@ -250,84 +253,116 @@ h1, h2, h3, h4, h5 {
 }
 
 .rekomendasi-section .section-heading h2 {
+  margin: 0;
+  text-wrap: balance;
   font-family: "Playfair Display", Georgia, serif;
   font-size: 30px;
   color: #5c2c16;
 }
 
-.rekomendasi-section .section-desc {
-  color: #8b4513;
-  margin-top: 12px;
+.recommendation-filters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 20px;
 }
 
-.rekomendasi-section .recommendation-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 20px;
-}
-
-.rekomendasi-section .recommendation-card {
-  background-color: rgba(255, 255, 255, 0.82);
-  border-left: 4px solid #8b4513;
-  border-radius: 0 12px 12px 0;
-  padding: 20px;
-  box-shadow: 0 4px 12px rgba(91, 44, 22, 0.05);
-}
-
-.rekomendasi-section .recommendation-image {
-  display: block;
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-  border-radius: 10px;
-  margin-bottom: 15px;
-}
-
-.rekomendasi-section .recommendation-area {
-  display: inline-block;
-  background-color: #8b4513;
-  color: #f4e4a2;
-  padding: 3px 10px;
+.recommendation-filters button {
+  border: 1px solid #ae866c;
   border-radius: 999px;
-  font-weight: 700;
-  font-size: 12px;
-  margin-bottom: 10px;
+  padding: 8px 15px;
+  background: #fffaf4;
+  color: #5c2c16;
+  font-size: 0.9rem;
 }
 
-.rekomendasi-section .recommendation-card h3 {
-  font-family: "Playfair Display", Georgia, serif;
-  font-size: 20px;
+.recommendation-filters button[aria-pressed="true"] {
+  background: #703819;
+  border-color: #703819;
+  color: white;
+}
+
+.recommendation-list {
+  max-width: 840px;
+  margin: 0 auto;
+}
+
+.recommendation-group + .recommendation-group {
+  margin-top: 36px;
+}
+
+.recommendation-group h3 {
+  font-size: 1.15rem;
   color: #5c2c16;
   margin-bottom: 12px;
 }
 
-.rekomendasi-section .recommendation-card p {
-  color: #4a4a4a;
-  font-size: 14px;
-  margin-bottom: 8px;
+.recommendation-group ul {
+  display: grid;
+  gap: clamp(16px, 2vw, 24px);
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
-.rekomendasi-section .maps-btn {
-  display: inline-block;
-  margin-top: 12px;
-  padding: 8px 14px;
-  background-color: #8b4513;
-  color: white;
-  border-radius: 6px;
-  font-size: 13px;
+.recommendation-group li {
+  display: flex;
+  align-items: flex-start;
+  gap: clamp(12px, 3vw, 26px);
+  padding: clamp(14px, 3vw, 24px);
+  background: #fffaf4;
+  border: 1px solid #ae866c;
+  border-radius: 12px;
+}
+
+.recommendation-group img {
+  flex: none;
+  width: clamp(76px, 20vw, 164px);
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.recommendation-group li > div {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.recommendation-group h4 {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(1.05rem, 3vw, 1.35rem);
+  color: #5c2c16;
+  margin: 0 0 6px;
+}
+
+.recommendation-group p {
+  margin: 0 0 4px;
+  font-size: 0.9rem;
+}
+
+.recommendation-group .place-price {
+  font-weight: 600;
+}
+
+.place-map-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+  padding: 7px 12px;
+  border-radius: 8px;
+  background: #f2e8dc;
+  color: #66351e;
+  font-size: 0.85rem;
   font-weight: 600;
   text-decoration: none;
 }
 
-.rekomendasi-section .maps-btn:hover {
-  background-color: #5c2c16;
-  color: white;
-}
-
-@media (min-width: 992px) {
-  .rekomendasi-section .recommendation-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
+.place-map-link:hover,
+.place-map-link:focus-visible {
+  background: #703819;
+  color: #fffaf4;
 }
 
 #memories {
