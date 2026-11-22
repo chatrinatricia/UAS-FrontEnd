@@ -42,3 +42,8 @@ export type Memory = Prisma.MemoryModel
  * 
  */
 export type Place = Prisma.PlaceModel
+/**
+ * Model Sejarah
+ * 
+ */
+export type Sejarah = Prisma.SejarahModel

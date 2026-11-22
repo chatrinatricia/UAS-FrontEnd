@@ -10,7 +10,7 @@ import VisitorLogout from "@/components/VisitorLogout";
 
 type Menu = { id: string; label: string };
 
-// id harus sama dengan id section di halaman utama
+// id harus sama dengan id section di halaman utama (urutannya = urutan di halaman)
 const menus: Menu[] = [
   { id: "pengenalan", label: "Pengenalan" },
   { id: "sejarah", label: "Sejarah" },
@@ -59,6 +59,7 @@ export default function Navbar({ role }: { role?: "ADMIN" | "USER" }) {
             <span className="brand-subtitle">Legenda Betawi</span>
           </span>
         </RBNavbar.Brand>
+
         <RBNavbar.Toggle aria-controls="menu-utama" />
         <RBNavbar.Collapse id="menu-utama">
           <Nav className="ms-auto align-items-lg-center">
@@ -73,17 +74,33 @@ export default function Navbar({ role }: { role?: "ADMIN" | "USER" }) {
                 {menu.label}
               </Nav.Link>
             ))}
-            <Nav.Item className="nav-logout ms-lg-3">
-              {role === "USER" ? (
-                <VisitorLogout />
-              ) : role === "ADMIN" ? (
-                <Nav.Link as={Link} href="/admin" className="fw-semibold">
-                  Dashboard admin
-                </Nav.Link>
-              ) : (
-                <Nav.Link as={Link} href="/loginuser" className="fw-semibold">
+
+            <Nav.Item className="nav-logout">
+              {role === "USER" && (
+                <>
+                  <Link href="/akun" className={`nav-akun ${pathname === "/akun" ? "active" : ""}`}>
+                    Akun
+                  </Link>
+                  <VisitorLogout role="USER" id="btn-logout-user" />
+                </>
+              )}
+              {role === "ADMIN" && (
+                <>
+                  <Link href="/admin" className="nav-akun">
+                    Dashboard
+                  </Link>
+                  <VisitorLogout role="ADMIN" />
+                </>
+              )}
+              {!role && (
+                <Link href="/loginuser" className="btn-logout">
                   Masuk
-                </Nav.Link>
+                </Link>
               )}
             </Nav.Item>
           </Nav>
+        </RBNavbar.Collapse>
+      </Container>
+    </RBNavbar>
+  );
+}
