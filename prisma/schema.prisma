@@ -1,5 +1,4 @@
-// Skema database bagian Chatrina.
-// Teman satu kelompok menambahkan model miliknya sendiri di bawah (Place, Review, History, Video).
+// Skema database website Kerak Telor (PostgreSQL).
 
 generator client {
   provider = "prisma-client"
@@ -15,14 +14,14 @@ enum Role {
   ADMIN
 }
 
-// Akun. Admin dipakai untuk login dashboard; USER dipakai Ko Andre untuk login pengunjung.
+// Akun. ADMIN dipakai untuk login dashboard, USER untuk pengunjung.
 model User {
   id           Int      @id @default(autoincrement())
-  memories     Memory[]
   username     String   @unique
   passwordHash String
   role         Role     @default(USER)
   createdAt    DateTime @default(now())
+  memories     Memory[]
 }
 
 // Slide di bagian hero (tampilan awal)
@@ -48,17 +47,19 @@ model AboutContent {
   feature2Text  String
 }
 
+// Ulasan pengunjung (Wall of Memories). status: pending | approved | rejected
 model Memory {
-  userId    Int?
-  user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
-  id        String   @id @default(cuid())
-  nama      String
-  rating    Int
-  cerita    String
-  status    String   @default("pending")
-  tanggal   DateTime @default(now())
+  userId  Int?
+  user    User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  id      String   @id @default(cuid())
+  nama    String
+  rating  Int
+  cerita  String
+  status  String   @default("pending")
+  tanggal DateTime @default(now())
 }
 
+// Rekomendasi tempat kerak telor
 model Place {
   id       Int    @id @default(autoincrement())
   area     String
@@ -69,14 +70,16 @@ model Place {
   maps     String
   gambar   String
 }
+
+// Timeline sejarah. Urutan tampil mengikuti kolom "order".
 model Sejarah {
-  id          String   @id @default(uuid())
-  era         String?  
-  judul       String   
-  deskripsi   String   // Hapus @db.Text di sini
-  gambar      String?  
-  caption     String?  
-  order       Int      @default(0)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id        String   @id @default(uuid())
+  era       String?
+  judul     String
+  deskripsi String
+  gambar    String?
+  caption   String?
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

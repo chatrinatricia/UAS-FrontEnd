@@ -1,0 +1,157 @@
+section[id] {
+  scroll-margin-top: 80px;
+}
+
+@media (max-width: 1285px) {
+  .hero-slide {
+    height: 65vh;
+  }
+}
+
+@media (max-width: 991px) {
+  .site-navbar .navbar-collapse {
+    margin-top: 0.5rem;
+    padding: 0.25rem 0 1rem;
+    border-top: 1px solid rgba(212, 175, 55, 0.35);
+  }
+
+  .site-navbar .nav-link {
+    padding: 0.75rem 0.25rem;
+  }
+
+  .hero-caption h1 {
+    font-size: 2.25rem;
+  }
+
+  .hero-caption .lead {
+    font-size: 1.1rem;
+  }
+
+  .section,
+  .rekomendasi-section,
+  #memories {
+    padding: 3.5rem 0;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .rekomendasi-section .recommendation-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  #memories .memory-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  body {
+    background-attachment: scroll;
+  }
+
+  .hero-slide {
+    height: 60vh;
+    min-height: 460px;
+  }
+
+  .hero-caption {
+    left: 6%;
+    right: 6%;
+    bottom: 10%;
+  }
+
+  .hero-caption h1 {
+    font-size: 1.75rem;
+  }
+
+  .hero-caption .lead {
+    font-size: 1rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .hero-caption .btn {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+  }
+
+  .section,
+  .rekomendasi-section,
+  #memories {
+    padding: 2.5rem 0;
+  }
+
+  .rekomendasi-section .section-heading,
+  #memories .section-heading {
+    margin-bottom: 2rem;
+  }
+
+  .rekomendasi-section .section-heading h2,
+  #memories .section-heading h2 {
+    font-size: 24px;
+  }
+
+  .form-control,
+  .form-select,
+  #memories #storyForm input,
+  #memories #storyForm textarea {
+    font-size: 16px;
+  }
+
+  .rekomendasi-section .maps-btn {
+    padding: 10px 16px;
+  }
+
+  #footer {
+    text-align: center;
+  }
+
+  .cell-wrap {
+    max-width: 220px;
+  }
+
+  .sejarah-photo img {
+    height: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .brand-title {
+    font-size: 1.1rem;
+  }
+
+  .hero-caption h1 {
+    font-size: 1.5rem;
+  }
+
+  #memories .rating-button {
+    font-size: 30px;
+  }
+}
+
+.admin-topbar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  background-color: var(--kt-darkwood);
+  color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 1020;
+}
+
+.admin-menu-btn {
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  color: #fff;
+  border-radius: 6px;
+  font-size: 1.25rem;
+  line-height: 1;
+  padding: 0.25rem 0.6rem;
+}
+
+@media (max-width: 767.98px) {
+  .admin-sidebar:not(.open) {
+    display: none !important;
+  }
+}

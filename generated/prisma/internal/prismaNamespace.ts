@@ -401,7 +401,8 @@ export const ModelName = {
   HeroSlide: 'HeroSlide',
   AboutContent: 'AboutContent',
   Memory: 'Memory',
-  Place: 'Place'
+  Place: 'Place',
+  Sejarah: 'Sejarah'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -417,7 +418,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "heroSlide" | "aboutContent" | "memory" | "sejarah"
+    modelProps: "user" | "heroSlide" | "aboutContent" | "memory" | "place" | "sejarah"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -788,6 +789,9 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.PlaceCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.PlaceCountAggregateOutputType> | number
+        }
+      }
+    }
     Sejarah: {
       payload: Prisma.$SejarahPayload<ExtArgs>
       fields: Prisma.SejarahFieldRefs
@@ -961,6 +965,8 @@ export const PlaceScalarFieldEnum = {
 } as const
 
 export type PlaceScalarFieldEnum = (typeof PlaceScalarFieldEnum)[keyof typeof PlaceScalarFieldEnum]
+
+
 export const SejarahScalarFieldEnum = {
   id: 'id',
   era: 'era',

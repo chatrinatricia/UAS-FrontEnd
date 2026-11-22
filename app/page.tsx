@@ -1,5 +1,8 @@
+import { redirect } from "next/navigation";
 import { connection } from "next/server";
+import { getSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { sejarahFields } from "@/lib/sejarah";
 import HeroSection from "@/components/HeroSection";
 import AboutSection from "@/components/AboutSection";
 import RecommendationSection from "@/components/RecommendationSection";
@@ -9,7 +12,12 @@ import { ABOUT } from "@/prisma/seed-data";
 export default async function HomePage() {
   await connection();
 
-  const [slides, about, memories, tempat] = await Promise.all([
+  // Website ini khusus pengunjung yang sudah punya akun: belum login -> ke halaman masuk
+  const session = await getSession();
+  if (!session) redirect("/loginuser");
+
+  // Urutan nama di kiri HARUS sama dengan urutan query di kanan
+  const [slides, about, sejarah, tempat, memories] = await Promise.all([
     prisma.heroSlide.findMany({ orderBy: { sortOrder: "asc" } }),
     prisma.aboutContent.findUnique({ where: { id: 1 } }),
     prisma.memory.findMany({
@@ -18,13 +26,16 @@ export default async function HomePage() {
       orderBy: { tanggal: "desc" },
       take: 10,
     }),
-    prisma.place.findMany({ orderBy: { id: "asc" } }),
   ]);
 
+  // Latar selang-seling: Pengenalan (polkadot) -> Sejarah (polos) -> Cara Pembuatan (polkadot)
+  // -> Rekomendasi (polos) -> Wall of Memories (polkadot)
   return (
     <>
       <HeroSection slides={slides} />
       <AboutSection about={about ?? ABOUT} />
+      <SejarahSection sejarah={sejarah} />
+      <PembuatanSection />
       <RecommendationSection tempat={tempat} />
       <WallOfMemories daftar={memories} />
     </>

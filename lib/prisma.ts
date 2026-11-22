@@ -1,3 +1,4 @@
+// Koneksi ke database SQLite (file dev.db) - khusus untuk cek tampilan di laptop.
 import { PrismaClient } from "@/generated/prisma/client";
 import { PrismaBetterSqlite3 } from "@prisma/adapter-better-sqlite3";
 

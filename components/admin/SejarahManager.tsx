@@ -1,293 +1,249 @@
 "use client";
+import { useState, type FormEvent } from "react";
+import ConfirmModal from "@/components/admin/ConfirmModal";
+import type { Notify } from "@/components/admin/types";
+import { saveSejarah, deleteSejarah } from "@/lib/sejarah-actions";
+import type { SejarahInput, SejarahItem } from "@/lib/sejarah";
 
-import { useState, useEffect } from "react";
-import Image from "next/image";
-
-type SejarahItem = {
-  id: number;
-  era: string;
-  judul: string;
-  deskripsi: string;
-  gambar: string | null;
-  caption: string | null;
-  order: number;
+type Props = {
+  initialSejarah: SejarahItem[];
+  notify: Notify;
 };
 
-export default function SejarahManager() {
-  const [dataSejarah, setDataSejarah] = useState<SejarahItem[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [editId, setEditId] = useState<number | null>(null);
-  
-  const [form, setForm] = useState({
-    era: "",
-    judul: "",
-    deskripsi: "",
-    gambar: "",
-    caption: "",
-    order: 1,
-  });
+const urutkan = (items: SejarahItem[]) => [...items].sort((a, b) => a.order - b.order);
 
-  const fetchData = async () => {
-    try {
-      setLoading(true);
-      const res = await fetch("/api/sejarah");
-      if (res.ok) {
-        const json = await res.json();
-        setDataSejarah(json);
-      }
-    } catch (error) {
-      console.error("Gagal memuat data sejarah", error);
-    } finally {
-      setLoading(false);
-    }
-  };
+// Nomor urutan berikutnya = urutan terbesar yang ada + 1
+const urutanBerikut = (items: SejarahItem[]) => items.reduce((max, item) => Math.max(max, item.order), 0) + 1;
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+const formBaru = (items: SejarahItem[]): SejarahInput => ({
+  era: "",
+  judul: "",
+  deskripsi: "",
+  gambar: "",
+  caption: "",
+  order: urutanBerikut(items),
+});
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      const url = editId ? `/api/sejarah/${editId}` : "/api/sejarah";
-      const method = editId ? "PUT" : "POST";
+export default function SejarahManager({ initialSejarah, notify }: Props) {
+  const [daftar, setDaftar] = useState(() => urutkan(initialSejarah));
+  const [form, setForm] = useState<SejarahInput>(() => formBaru(initialSejarah));
+  const [editId, setEditId] = useState<string | null>(null);
+  const [hapusId, setHapusId] = useState<string | null>(null);
+  const [saving, setSaving] = useState(false);
 
-      const res = await fetch(url, {
-        method,
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
-      });
+  function updateForm<K extends keyof SejarahInput>(key: K, value: SejarahInput[K]) {
+    setForm((prev) => ({ ...prev, [key]: value }));
+  }
 
-      if (res.ok) {
-        setForm({ era: "", judul: "", deskripsi: "", gambar: "", caption: "", order: 1 });
-        setEditId(null);
-        fetchData();
-        alert(editId ? "Berhasil memperbarui sejarah!" : "Berhasil menambah era sejarah!");
-      } else {
-        alert("Gagal menyimpan data.");
-      }
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
+  function resetForm() {
+    setForm(formBaru(daftar));
+    setEditId(null);
+  }
 
-  const handleEdit = (item: SejarahItem) => {
+  function mulaiEdit(item: SejarahItem) {
     setEditId(item.id);
     setForm({
-      era: item.era,
+      era: item.era ?? "",
       judul: item.judul,
       deskripsi: item.deskripsi,
-      gambar: item.gambar || "",
-      caption: item.caption || "",
+      gambar: item.gambar ?? "",
+      caption: item.caption ?? "",
       order: item.order,
     });
     window.scrollTo({ top: 0, behavior: "smooth" });
-  };
+  }
 
-  const handleDelete = async (id: number) => {
-    if (!confirm("Yakin ingin menghapus era sejarah ini?")) return;
-    try {
-      const res = await fetch(`/api/sejarah/${id}`, { method: "DELETE" });
-      if (res.ok) {
-        fetchData();
-      } else {
-        alert("Gagal menghapus data.");
-      }
-    } catch (error) {
-      console.error("Error:", error);
+  async function simpan(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    if (saving) return;
+
+    if (form.gambar && !/^(?:\/images\/|https:\/\/)/.test(form.gambar.trim())) {
+      notify("Gambar harus diawali /images/ atau https://", "danger");
+      return;
     }
-  };
+
+    setSaving(true);
+    try {
+      const saved = await saveSejarah(editId, form);
+      const berikut = urutkan(
+        editId === null ? [...daftar, saved] : daftar.map((item) => (item.id === saved.id ? saved : item))
+      );
+      setDaftar(berikut);
+      notify(editId === null ? "Sejarah berhasil ditambahkan." : "Sejarah berhasil diperbarui.");
+      setForm(formBaru(berikut));
+      setEditId(null);
+    } catch {
+      notify("Gagal menyimpan ke database.", "danger");
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  async function konfirmasiHapus() {
+    if (hapusId === null) return;
+    const id = hapusId;
+    setHapusId(null);
+    try {
+      await deleteSejarah(id);
+      setDaftar((items) => items.filter((item) => item.id !== id));
+      if (editId === id) resetForm();
+      notify("Sejarah berhasil dihapus.");
+    } catch {
+      notify("Gagal menghapus data.", "danger");
+    }
+  }
 
   return (
-    <div className="space-y-8">
-      {/* Form Tambah / Edit Sejarah */}
-      <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-        <h2 className="text-xl font-bold text-[#5C3A21] mb-6 border-b pb-3">
-          {editId ? "Edit Sejarah" : "Tambah / Edit Sejarah"}
-        </h2>
+    <div>
+      <div className="card shadow-sm border-0 p-4 mb-4">
+        <h2 className="fs-4 fw-bold mb-4">{editId === null ? "Tambah Era Sejarah" : "Edit Era Sejarah"}</h2>
 
-        <form onSubmit={handleSubmit} className="space-y-5">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <label className="block text-xs font-semibold uppercase tracking-wider text-gray-600 mb-2">
-                Era / Tahun
-              </label>
+        <form onSubmit={simpan}>
+          <div className="row g-3">
+            <div className="col-md-4">
+              <label className="form-label fw-semibold">Era / Tahun</label>
               <input
-                type="text"
-                value={form.era}
-                onChange={(e) => setForm({ ...form, era: e.target.value })}
+                className="form-control"
                 placeholder="Contoh: Era 1920-an"
-                required
-                className="w-full p-3 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-[#8B5A2B]"
+                value={form.era}
+                onChange={(e) => updateForm("era", e.target.value)}
+                maxLength={60}
               />
             </div>
-            <div>
-              <label className="block text-xs font-semibold uppercase tracking-wider text-gray-600 mb-2">
-                Judul Periode
-              </label>
+
+            <div className="col-md-6">
+              <label className="form-label fw-semibold">Judul Periode</label>
               <input
-                type="text"
+                className="form-control"
+                placeholder="Contoh: Awal Mula Ciptaan Tanpa Sengaja"
                 value={form.judul}
-                onChange={(e) => setForm({ ...form, judul: e.target.value })}
-                placeholder="Contoh: Awal Mulai Ciptaan Tanpa Sengaja"
+                onChange={(e) => updateForm("judul", e.target.value)}
+                maxLength={150}
                 required
-                className="w-full p-3 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-[#8B5A2B]"
               />
             </div>
-          </div>
 
-          <div>
-            <label className="block text-xs font-semibold uppercase tracking-wider text-gray-600 mb-2">
-              Deskripsi Sejarah
-            </label>
-            <textarea
-              value={form.deskripsi}
-              onChange={(e) => setForm({ ...form, deskripsi: e.target.value })}
-              placeholder="Tuliskan cerita sejarah..."
-              required
-              rows={4}
-              className="w-full p-3 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-[#8B5A2B]"
-            />
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <label className="block text-xs font-semibold uppercase tracking-wider text-gray-600 mb-2">
-                URL / Jalur Gambar
-              </label>
+            <div className="col-md-2">
+              <label className="form-label fw-semibold">Urutan</label>
               <input
-                type="text"
+                type="number"
+                min="0"
+                className="form-control"
+                value={form.order}
+                onChange={(e) => updateForm("order", Number(e.target.value))}
+                required
+              />
+            </div>
+
+            <div className="col-12">
+              <label className="form-label fw-semibold">Deskripsi</label>
+              <textarea
+                className="form-control"
+                rows={4}
+                placeholder="Tuliskan cerita sejarahnya..."
+                value={form.deskripsi}
+                onChange={(e) => updateForm("deskripsi", e.target.value)}
+                maxLength={2000}
+                required
+              />
+            </div>
+
+            <div className="col-md-6">
+              <label className="form-label fw-semibold">Gambar (opsional)</label>
+              <input
+                className="form-control"
+                placeholder="/images/nama-file.jpg atau https://..."
                 value={form.gambar}
-                onChange={(e) => setForm({ ...form, gambar: e.target.value })}
-                placeholder="Contoh: images/sejarah1.jpg atau https://..."
-                className="w-full p-3 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-[#8B5A2B]"
+                onChange={(e) => updateForm("gambar", e.target.value)}
+                maxLength={500}
               />
+              <small className="text-muted">Gambar lokal ada di folder public/images.</small>
             </div>
-            <div>
-              <label className="block text-xs font-semibold uppercase tracking-wider text-gray-600 mb-2">
-                Caption / Teks Gambar
-              </label>
+
+            <div className="col-md-6">
+              <label className="form-label fw-semibold">Caption Gambar (opsional)</label>
               <input
-                type="text"
+                className="form-control"
+                placeholder="Contoh: Suasana Batavia tempo dulu"
                 value={form.caption}
-                onChange={(e) => setForm({ ...form, caption: e.target.value })}
-                placeholder="Contoh: Awal kreasi masyarakat Betawi Menteng..."
-                className="w-full p-3 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-[#8B5A2B]"
+                onChange={(e) => updateForm("caption", e.target.value)}
+                maxLength={255}
               />
             </div>
           </div>
 
-          <div className="flex items-center gap-4 pt-2">
-            <button
-              type="submit"
-              className="px-6 py-3 bg-[#8B5A2B] text-white font-semibold text-sm rounded-lg hover:bg-[#6e4621] transition shadow-md"
-            >
-              {editId ? "Simpan Perubahan" : "Simpan ke Database"}
+          <button type="submit" disabled={saving} className="btn btn-primary w-100 mt-4">
+            {saving ? "Menyimpan..." : editId === null ? "Simpan Sejarah" : "Update Sejarah"}
+          </button>
+          {editId !== null && (
+            <button type="button" className="btn btn-secondary w-100 mt-2" onClick={resetForm}>
+              Batal Edit
             </button>
-            {editId && (
-              <button
-                type="button"
-                onClick={() => {
-                  setEditId(null);
-                  setForm({ era: "", judul: "", deskripsi: "", gambar: "", caption: "", order: 1 });
-                }}
-                className="px-4 py-3 bg-gray-200 text-gray-700 font-semibold text-sm rounded-lg hover:bg-gray-300 transition"
-              >
-                Batal
-              </button>
-            )}
-          </div>
+          )}
         </form>
       </div>
 
-      {/* Tabel Daftar Sejarah */}
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-        <div className="p-6 border-b flex justify-between items-center bg-gray-50/50">
-          <h3 className="font-bold text-lg text-[#5C3A21]">Daftar Sejarah</h3>
-          <button 
-            onClick={() => {
-              if (confirm("Reset data ke awal?")) {
-                fetch("/api/seed", { method: "POST" }).then(() => fetchData());
-              }
-            }}
-            className="px-3 py-1.5 text-xs font-medium border border-gray-300 rounded-md hover:bg-gray-100 text-gray-700 transition"
-          >
-            Kembalikan Data Awal
-          </button>
-        </div>
+      <div className="card shadow-sm border-0 p-4">
+        <h2 className="fs-5 fw-bold mb-3">Daftar Sejarah ({daftar.length})</h2>
 
-        {loading ? (
-          <div className="p-8 text-center text-gray-500 text-sm">Memuat data...</div>
-        ) : dataSejarah.length > 0 ? (
-          <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse">
-              <thead>
-                <tr className="bg-[#2D221C] text-white text-xs uppercase tracking-wider">
-                  <th className="p-4 w-12 text-center">ID</th>
-                  <th className="p-4 w-32">Gambar</th>
-                  <th className="p-4 w-28">Era</th>
-                  <th className="p-4">Judul & Deskripsi</th>
-                  <th className="p-4 w-56">Caption Gambar</th>
-                  <th className="p-4 w-28 text-center">Aksi</th>
+        <div className="table-responsive">
+          <table className="table table-striped table-hover align-middle">
+            <thead className="table-dark">
+              <tr>
+                <th>Urutan</th>
+                <th>Gambar</th>
+                <th>Era</th>
+                <th>Judul &amp; Deskripsi</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody>
+              {daftar.map((item) => (
+                <tr key={item.id}>
+                  <td>{item.order}</td>
+                  <td>
+                    {item.gambar ? (
+                      <img src={item.gambar} alt={item.judul} className="thumb" />
+                    ) : (
+                      <span className="text-muted small">-</span>
+                    )}
+                  </td>
+                  <td className="text-nowrap">{item.era ?? "-"}</td>
+                  <td className="cell-wrap">
+                    <strong>{item.judul}</strong>
+                    <div className="small text-muted">{item.deskripsi.slice(0, 110)}{item.deskripsi.length > 110 ? "..." : ""}</div>
+                  </td>
+                  <td>
+                    <div className="d-flex gap-2">
+                      <button type="button" className="btn btn-warning btn-sm" onClick={() => mulaiEdit(item)}>
+                        Edit
+                      </button>
+                      <button type="button" className="btn btn-danger btn-sm" onClick={() => setHapusId(item.id)}>
+                        Hapus
+                      </button>
+                    </div>
+                  </td>
                 </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-100 text-sm">
-                {dataSejarah.map((item) => (
-                  <tr key={item.id} className="hover:bg-gray-50/80 transition">
-                    <td className="p-4 text-center font-medium text-gray-600">{item.id}</td>
-                    <td className="p-4">
-                      {item.gambar ? (
-                        <div className="relative h-16 w-24 rounded-lg overflow-hidden border border-gray-200 bg-gray-100">
-                          <Image
-                            src={item.gambar}
-                            alt={item.judul}
-                            fill
-                            className="object-cover"
-                          />
-                        </div>
-                      ) : (
-                        <span className="text-xs text-gray-400 italic">Tidak ada</span>
-                      )}
-                    </td>
-                    <td className="p-4">
-                      <span className="px-2.5 py-1 text-xs font-bold bg-[#8B5A2B] text-white rounded-md whitespace-nowrap">
-                        {item.era}
-                      </span>
-                    </td>
-                    <td className="p-4 space-y-1">
-                      <h4 className="font-bold text-[#5C3A21]">{item.judul}</h4>
-                      <p className="text-xs text-gray-600 line-clamp-2 leading-relaxed">
-                        {item.deskripsi}
-                      </p>
-                    </td>
-                    <td className="p-4 text-xs italic text-gray-500">
-                      {item.caption ? `"${item.caption}"` : "-"}
-                    </td>
-                    <td className="p-4 text-center">
-                      <div className="flex items-center justify-center gap-2">
-                        <button
-                          onClick={() => handleEdit(item)}
-                          className="px-3 py-1 bg-amber-500 hover:bg-amber-600 text-white text-xs font-semibold rounded shadow-sm transition"
-                        >
-                          Edit
-                        </button>
-                        <button
-                          onClick={() => handleDelete(item.id)}
-                          className="px-3 py-1 bg-red-600 hover:bg-red-700 text-white text-xs font-semibold rounded shadow-sm transition"
-                        >
-                          Hapus
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        ) : (
-          <div className="p-8 text-center text-gray-500 text-sm">Belum ada data sejarah di database.</div>
-        )}
+              ))}
+
+              {daftar.length === 0 && (
+                <tr>
+                  <td colSpan={5} className="text-center text-muted">
+                    Belum ada data sejarah.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
+
+      <ConfirmModal
+        show={hapusId !== null}
+        message="Yakin ingin menghapus era sejarah ini? Tindakan ini tidak dapat dibatalkan."
+        onConfirm={konfirmasiHapus}
+        onCancel={() => setHapusId(null)}
+      />
     </div>
   );
 }
