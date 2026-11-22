@@ -17,10 +17,12 @@ import { api } from "@/lib/api";
 import type { Memory } from "@/lib/memories";
 import type { AboutContent, HeroSlide } from "@/lib/types";
 import SejarahManager from "@/components/admin/SejarahManager";
+import type { SejarahItem } from "@/lib/sejarah";
 
 type AdminDashboardProps = {
   username: string;
   initialTempat: Tempat[];
+  initialSejarah: SejarahItem[];
   initialSlides: HeroSlide[];
   initialMemories: Memory[];
   initialAbout: AboutContent;
@@ -28,7 +30,14 @@ type AdminDashboardProps = {
 
 type Toast = { text: string; type: "success" | "danger" };
 
-export default function AdminDashboard({ username, initialTempat, initialSlides, initialAbout, initialMemories }: AdminDashboardProps) {
+export default function AdminDashboard({
+  username,
+  initialTempat,
+  initialSejarah,
+  initialSlides,
+  initialAbout,
+  initialMemories,
+}: AdminDashboardProps) {
   const router = useRouter();
   const [slides, setSlides] = useState(initialSlides);
   const [memories, setMemories] = useState(initialMemories);
@@ -86,7 +95,10 @@ export default function AdminDashboard({ username, initialTempat, initialSlides,
               <AboutEditor initialAbout={initialAbout} notify={notify} />
             </Tab.Pane>
 
-            <Tab.Pane eventKey="sejarah"><p>sejarah.</p></Tab.Pane>
+            <Tab.Pane eventKey="sejarah">
+              <h1 className="fs-3 fw-bold mb-4">Kelola Sejarah</h1>
+              <SejarahManager initialSejarah={initialSejarah} notify={notify} />
+            </Tab.Pane>
             <Tab.Pane eventKey="video"><p>cara pembuatan (video).</p></Tab.Pane>
             <Tab.Pane eventKey="tempat"> <h1 className="fs-3 fw-bold mb-4"> Kelola Rekomendasi Tempat </h1> <RecommendationEditor initialTempat={initialTempat} notify={notify} /> </Tab.Pane>
             <Tab.Pane eventKey="ulasan" mountOnEnter unmountOnExit> <h1 className="fs-3 fw-bold mb-4">Moderasi Ulasan</h1> <MemoriesEditor memories={memories} setMemories={setMemories} notify={notify} /> </Tab.Pane>

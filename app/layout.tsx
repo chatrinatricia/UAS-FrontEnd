@@ -4,6 +4,7 @@ import { Playfair_Display, Plus_Jakarta_Sans } from "next/font/google";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./globals.css";
 import "./responsive.css";
+import "./site-extra.css";
 import { getSession } from "@/lib/auth";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";

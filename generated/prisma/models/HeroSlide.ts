@@ -1035,7 +1035,6 @@ export type HeroSlideCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Int
    * The data used to create many HeroSlides.
    */
   data: Prisma.HeroSlideCreateManyInput | Prisma.HeroSlideCreateManyInput[]
-  skipDuplicates?: boolean
 }
 
 /**
@@ -1054,7 +1053,6 @@ export type HeroSlideCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Exten
    * The data used to create many HeroSlides.
    */
   data: Prisma.HeroSlideCreateManyInput | Prisma.HeroSlideCreateManyInput[]
-  skipDuplicates?: boolean
 }
 
 /**

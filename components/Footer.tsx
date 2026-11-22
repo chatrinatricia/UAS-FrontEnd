@@ -1,46 +1,70 @@
 "use client";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Col, Container, Row } from "react-bootstrap";
+import Container from "react-bootstrap/Container";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
 const HIDDEN_ON = ["/login", "/register", "/admin"];
+
+// ====== BAGIAN YANG BOLEH DIEDIT KELOMPOK ======
+const ORGANISASI = "Kelompok 10 - Makanan Nusantara";
+
+// Isi `akun` dengan nama akun asli. Isi `url` dengan link profilnya supaya bisa diklik
+// (kalau url dikosongkan, hanya tampil sebagai teks).
+const SOSMED = [
+  { nama: "Instagram", akun: "@kelompok10", ikon: "bi-instagram", url: "" },
+  { nama: "TikTok", akun: "@kelompok10", ikon: "bi-tiktok", url: "" },
+  { nama: "YouTube", akun: "Kelompok 10", ikon: "bi-youtube", url: "" },
+];
 
 export default function Footer() {
   const pathname = usePathname();
   if (HIDDEN_ON.some((p) => pathname.startsWith(p))) return null;
 
   return (
-    <footer id="footer" className="pt-md-5 pb-md-2 py-4 mt-auto">
+    <footer id="footer" className="site-footer mt-auto">
       <Container>
-        <Row>
-          <Col md={5} className="mb-3">
-            <h3>Kerak Telor</h3>
-            <p className="mb-0">
-              Website edukasi dan promosi kuliner Betawi. Mengenal asal-usul, cara pembuatan,
-              dan tempat terbaik menikmati kerak telor di Jakarta.
+        <div className="footer-main">
+          <div>
+            <Link href="/" className="footer-brand">
+              <Image src="/images/logo.jpeg" alt="Logo Kerak Telor" width={36} height={36} className="brand-logo" />
+              <span className="footer-brand-name">Kerak Telor</span>
+            </Link>
+            <p className="footer-org">
+              Dikelola oleh <strong>{ORGANISASI}</strong>
             </p>
-          </Col>
-          <Col md={3} className="mb-3">
-            <h4 className="fs-5">Tautan Cepat</h4>
-            <ul className="list-unstyled">
-              <li className="mb-2"><Link href="/#pengenalan">Pengenalan</Link></li>
-              <li className="mb-2"><Link href="/#sejarah">Sejarah</Link></li>
-              <li className="mb-2"><Link href="/#rekomendasi">Rekomendasi Tempat</Link></li>
-              <li className="mb-2"><Link href="/#memories">Wall of Memories</Link></li>
+          </div>
+
+          <div>
+            <p className="footer-social-title">Ikuti Kami</p>
+            <ul className="footer-social">
+              {SOSMED.map((s) => {
+                const isi = (
+                  <>
+                    <i className={`bi ${s.ikon}`} aria-hidden="true" />
+                    <span className="footer-social-name">{s.nama}</span>
+                    <span className="footer-social-handle">{s.akun}</span>
+                  </>
+                );
+                return (
+                  <li key={s.nama}>
+                    {s.url ? (
+                      <a href={s.url} target="_blank" rel="noopener noreferrer">
+                        {isi}
+                      </a>
+                    ) : (
+                      <span className="footer-social-item">{isi}</span>
+                    )}
+                  </li>
+                );
+              })}
             </ul>
-          </Col>
-          <Col md={4} className="mb-3">
-            <h4 className="fs-5">Tentang Proyek</h4>
-            <ul className="list-unstyled">
-              <li className="mb-2"><i className="bi bi-people-fill me-2"></i>Kelompok 10 - Makanan Nusantara</li>
-              <li className="mb-2"><i className="bi bi-geo-alt-fill me-2"></i>Jakarta, Indonesia</li>
-              <li className="mb-2"><i className="bi bi-code-slash me-2"></i>Dibuat dengan Next.js</li>
-            </ul>
-          </Col>
-        </Row>
-        <p className="text-center small mb-0 pt-2 border-top border-secondary-subtle">
-          &copy; {new Date().getFullYear()} Kerak Telor - Legenda Betawi
+          </div>
+        </div>
+
+        <p className="footer-copy">
+          &copy; {new Date().getFullYear()} {ORGANISASI}. Seluruh hak cipta dilindungi.
         </p>
       </Container>
     </footer>
