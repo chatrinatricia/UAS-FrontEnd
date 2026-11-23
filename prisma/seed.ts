@@ -1,4 +1,6 @@
+import "dotenv/config";
 import { PrismaPg } from "@prisma/adapter-pg";
+import { initialTutorialVideos } from "./tutorial-video-data";
 import { PrismaClient } from "../generated/prisma/client";
 import { hash } from "bcryptjs";
 
@@ -165,6 +167,7 @@ const TEMPAT = [
 ];
 
 async function main() {
+  if ((await prisma.tutorialVideo.count()) === 0) await prisma.tutorialVideo.createMany({ data: initialTutorialVideos });
   // Tabel konten hanya diisi kalau masih kosong, jadi hasil edit di dashboard tidak tertimpa.
   if ((await prisma.heroSlide.count()) === 0) await prisma.heroSlide.createMany({ data: HERO_SLIDES });
   if ((await prisma.sejarah.count()) === 0) await prisma.sejarah.createMany({ data: SEJARAH });

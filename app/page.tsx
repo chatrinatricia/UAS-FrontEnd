@@ -22,7 +22,7 @@ export default async function HomePage() {
   const [slides, about, sejarah, tempat, memories] = await Promise.all([
     prisma.heroSlide.findMany({ orderBy: { sortOrder: "asc" } }),
     prisma.aboutContent.findUnique({ where: { id: 1 } }),
-    prisma.sejarah.findMany({ select: sejarahFields, orderBy: { order: "asc" } }),
+    prisma.sejarah.findMany({ orderBy: { order: "asc" }, select: sejarahFields }),
     prisma.place.findMany({ orderBy: { id: "asc" } }),
     prisma.memory.findMany({
       where: { status: "approved" },

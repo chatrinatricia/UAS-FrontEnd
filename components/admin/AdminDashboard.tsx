@@ -8,6 +8,8 @@ import Col from "react-bootstrap/Col";
 import Nav from "react-bootstrap/Nav";
 import Row from "react-bootstrap/Row";
 import Tab from "react-bootstrap/Tab";
+import VideoEditor from "@/components/admin/VideoEditor";
+import type { TutorialVideo } from "@/lib/tutorial-videos";
 import AboutEditor from "@/components/admin/AboutEditor";
 import HeroEditor from "@/components/admin/HeroEditor";
 import type { Tempat } from "@/lib/recommendations";
@@ -20,6 +22,7 @@ import SejarahManager from "@/components/admin/SejarahManager";
 import type { SejarahItem } from "@/lib/sejarah";
 
 type AdminDashboardProps = {
+  videos: TutorialVideo[];
   username: string;
   initialTempat: Tempat[];
   initialSejarah: SejarahItem[];
@@ -31,6 +34,7 @@ type AdminDashboardProps = {
 type Toast = { text: string; type: "success" | "danger" };
 
 export default function AdminDashboard({
+  videos,
   username,
   initialTempat,
   initialSejarah,
@@ -99,7 +103,10 @@ export default function AdminDashboard({
               <h1 className="fs-3 fw-bold mb-4">Kelola Sejarah</h1>
               <SejarahManager initialSejarah={initialSejarah} notify={notify} />
             </Tab.Pane>
-            <Tab.Pane eventKey="video"><p>cara pembuatan (video).</p></Tab.Pane>
+            <Tab.Pane eventKey="video">
+              <h1 className="fs-3 fw-bold mb-4">Kelola Video</h1>
+              <VideoEditor videos={videos} notify={notify} />
+            </Tab.Pane>
             <Tab.Pane eventKey="tempat"> <h1 className="fs-3 fw-bold mb-4"> Kelola Rekomendasi Tempat </h1> <RecommendationEditor initialTempat={initialTempat} notify={notify} /> </Tab.Pane>
             <Tab.Pane eventKey="ulasan" mountOnEnter unmountOnExit> <h1 className="fs-3 fw-bold mb-4">Moderasi Ulasan</h1> <MemoriesEditor memories={memories} setMemories={setMemories} notify={notify} /> </Tab.Pane>
           </Tab.Content>
