@@ -29,6 +29,7 @@ export default function SejarahSection({ sejarah }: SejarahSectionProps) {
             <div className="sejarah-gallery">
               {photos.map((item) => (
                 <figure className="sejarah-photo" key={item.id}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={item.gambar!} alt={item.judul} />
                   {item.caption && <figcaption>&ldquo;{item.caption}&rdquo;</figcaption>}
                 </figure>

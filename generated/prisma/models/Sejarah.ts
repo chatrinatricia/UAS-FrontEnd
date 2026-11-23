@@ -1148,6 +1148,7 @@ export type SejarahCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * The data used to create many Sejarahs.
    */
   data: Prisma.SejarahCreateManyInput | Prisma.SejarahCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -1166,6 +1167,7 @@ export type SejarahCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensi
    * The data used to create many Sejarahs.
    */
   data: Prisma.SejarahCreateManyInput | Prisma.SejarahCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
