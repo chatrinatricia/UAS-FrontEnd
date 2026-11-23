@@ -83,3 +83,9 @@ model Sejarah {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+model TutorialVideo {
+  slot      Int    @id
+  title     String
+  youtubeId String
+}

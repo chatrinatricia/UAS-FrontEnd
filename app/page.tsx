@@ -5,6 +5,8 @@ import { prisma } from "@/lib/prisma";
 import { sejarahFields } from "@/lib/sejarah";
 import HeroSection from "@/components/HeroSection";
 import AboutSection from "@/components/AboutSection";
+import SejarahSection from "@/components/SejarahSection";
+import PembuatanSection from "@/components/PembuatanSection";
 import RecommendationSection from "@/components/RecommendationSection";
 import WallOfMemories from "@/components/WallOfMemories";
 import { ABOUT } from "@/prisma/seed-data";
@@ -20,6 +22,8 @@ export default async function HomePage() {
   const [slides, about, sejarah, tempat, memories] = await Promise.all([
     prisma.heroSlide.findMany({ orderBy: { sortOrder: "asc" } }),
     prisma.aboutContent.findUnique({ where: { id: 1 } }),
+    prisma.sejarah.findMany({ orderBy: { order: "asc" }, select: sejarahFields }),
+    prisma.place.findMany({ orderBy: { id: "asc" } }),
     prisma.memory.findMany({
       where: { status: "approved" },
       select: { id: true, nama: true, cerita: true, rating: true },
