@@ -7,7 +7,7 @@ export async function GET() {
       orderBy: { order: "asc" },
     });
     return NextResponse.json(sejarah);
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: "Gagal memuat data" }, { status: 500 });
   }
 }
@@ -29,7 +29,7 @@ export async function POST(request: Request) {
     });
 
     return NextResponse.json(newSejarah, { status: 201 });
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: "Gagal menyimpan data" }, { status: 500 });
   }
 }

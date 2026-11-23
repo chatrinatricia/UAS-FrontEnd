@@ -17,7 +17,7 @@ type SejarahSectionProps = {
 
 export default function SejarahSection({ sejarah }: SejarahSectionProps) {
   // Ambil item yang punya gambar (maksimal 2 untuk kolom kanan)
-  const itemsWithImages = sejarah.filter((item) => item.gambar);
+  const itemsWithImages = sejarah.filter((item) => item.gambar).slice(0, 2);
 
   return (
     <Section

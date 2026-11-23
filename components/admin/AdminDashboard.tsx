@@ -16,7 +16,7 @@ import MemoriesEditor from "@/components/admin/MemoriesEditor";
 import { api } from "@/lib/api";
 import type { Memory } from "@/lib/memories";
 import type { AboutContent, HeroSlide } from "@/lib/types";
-import SejarahManager from "@/components/admin/SejarahManager";
+import SejarahManager from "./SejarahManager";
 
 type AdminDashboardProps = {
   username: string;
@@ -71,7 +71,9 @@ export default function AdminDashboard({ username, initialTempat, initialSlides,
               <AboutEditor initialAbout={initialAbout} notify={notify} />
             </Tab.Pane>
 
-            <Tab.Pane eventKey="sejarah"><p>sejarah.</p></Tab.Pane>
+            <Tab.Pane eventKey="sejarah">
+              <SejarahManager />
+            </Tab.Pane>
             <Tab.Pane eventKey="video"><p>cara pembuatan (video).</p></Tab.Pane>
             <Tab.Pane eventKey="tempat"> <h1 className="fs-3 fw-bold mb-4"> Kelola Rekomendasi Tempat </h1> <RecommendationEditor initialTempat={initialTempat} notify={notify} /> </Tab.Pane>
             <Tab.Pane eventKey="ulasan" mountOnEnter unmountOnExit> <h1 className="fs-3 fw-bold mb-4">Moderasi Ulasan</h1> <MemoriesEditor memories={memories} setMemories={setMemories} notify={notify} /> </Tab.Pane>

@@ -2,26 +2,26 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
 export async function DELETE(
-  request: Request,
-  { params }: { params: { id: string } }
+  _request: Request,
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const id = Number(params.id);
+    const { id } = await params;
     await prisma.sejarah.delete({
       where: { id },
     });
     return NextResponse.json({ message: "Berhasil menghapus data" });
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: "Gagal menghapus data" }, { status: 500 });
   }
 }
 
 export async function PUT(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const id = Number(params.id);
+    const { id } = await params;
     const body = await request.json();
     const { era, judul, deskripsi, gambar, caption, order } = body;
 
@@ -38,7 +38,7 @@ export async function PUT(
     });
 
     return NextResponse.json(updated);
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: "Gagal mengupdate data" }, { status: 500 });
   }
 }
