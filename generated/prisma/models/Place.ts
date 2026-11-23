@@ -1125,6 +1125,7 @@ export type PlaceCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Interna
    * The data used to create many Places.
    */
   data: Prisma.PlaceCreateManyInput | Prisma.PlaceCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -1143,6 +1144,7 @@ export type PlaceCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extension
    * The data used to create many Places.
    */
   data: Prisma.PlaceCreateManyInput | Prisma.PlaceCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**

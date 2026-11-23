@@ -1172,6 +1172,7 @@ export type AboutContentCreateManyArgs<ExtArgs extends runtime.Types.Extensions.
    * The data used to create many AboutContents.
    */
   data: Prisma.AboutContentCreateManyInput | Prisma.AboutContentCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -1190,6 +1191,7 @@ export type AboutContentCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Ex
    * The data used to create many AboutContents.
    */
   data: Prisma.AboutContentCreateManyInput | Prisma.AboutContentCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
